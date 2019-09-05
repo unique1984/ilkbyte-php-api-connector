@@ -1,7 +1,29 @@
 {
-    "autoload": {
-        "psr-4": {
-            "PhpApiConnector\\": "./"
-        }
+  "name": "unique1984/ilkbyte-php-api-connector",
+  "type": "library",
+  "description": "İlkbyte sanal sunucu için api işlemlerini yapar",
+  "keywords": [
+    "ilkbyte",
+    "php",
+    "api",
+    "connector"
+  ],
+  "homepage": "https://github.com/unique1984/ilkbyte-php-api-connector",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Yasin Karabulak",
+      "email": "info@yasinkarabulak.com",
+      "homepage": "https://yasinkarabulak.com",
+      "role": "Full Stack developer"
     }
+  ],
+  "require": {
+    "php": "^7.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "PhpApiConnector\\": "./"
+    }
+  }
 }
