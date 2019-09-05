@@ -19,7 +19,7 @@ final class StatusCheck extends Api
         $call = new Curl();
         $status = $call->apiCall($url, $parameters, $devMode);
 
-        print_r($status);
+//        print_r($status);
 
         $this->setStatus($status);
     }
