@@ -20,30 +20,30 @@ class Curl
         // IS DEBUG MODE ENABLED
         $debug = false;
         $sslVerify = true;
-
         if ($devMode) {
             $debug = true;
             $sslVerify = false;
         }
 
         // POST DATA INIT
-//        print_r($parameters);
-        $postData = array();
-        foreach ($parameters as $key => $val) {
-            $postData[$key] = urlencode($val);
-        }
-//        print_r($postData);
+        $postData = array_map('urlencode', $parameters);
         $postString = http_build_query($postData);
 
         $headers = array(
             //~ "Content-Type: text/plain; charset=windows-1254",
             //~ "Content-Type: text/html; charset=ISO-8859-9",
-            "Content-Type: text/html; charset=UTF-8",
+//            "Content-Type: text/html; charset=UTF-8",
+//            "Content-Type: multipart/form-data", // image post
+            "Content-Type: application/x-www-form-urlencoded" // form post
         );
 
         $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_USERAGENT, "Unique1984-PhpApiConnector " . VERSION);
+        curl_setopt($ch, CURLOPT_USERAGENT, "Unique1984-PhpApiConnector " . VERSION . " - " . REPOSITORY);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         // SSL VERIFICATION
         if (!$sslVerify) {
@@ -54,23 +54,24 @@ class Curl
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
         }
 
-        // POST DATA
+        // POST
+        curl_setopt($ch,CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_POST, count($postData));
+//        curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postString);
 
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
         if ($debug) {
             curl_setopt($ch, CURLOPT_HEADER, 1);
         }
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_URL, $url);
 
         // EXECUTE REQUEST
         $returnData = curl_exec($ch);
 
         if (curl_errno($ch)) {
-            die("Curl Hata: " . curl_error($ch));
+            die("Curl Error: " . curl_error($ch));
         }
 
         $chInfo = curl_getinfo($ch);
@@ -93,7 +94,7 @@ class Curl
         curl_close($ch);
 
         if (file_exists($saveTo)) {
-            //~ Varsa numaralandır eklenebilir...
+            //~ If exists incrementally save the data might be append.
             unlink($saveTo);
         }
 
