@@ -11,8 +11,26 @@ namespace PhpApiConnector\Handler;
 
 class Curl
 {
-    public function getPage($url, $method = 'post', $parameters = array(), $debug = false, $sslVerify = false)
-    {
+    public function apiCall(
+        string $url,
+        array $parameters = array(),
+        bool $devMode = false
+    ) {
+
+        // IS DEBUG MODE ENABLED
+        $debug = false;
+        $sslVerify = true;
+        if ($devMode) {
+            $debug = true;
+            $sslVerify = false;
+        }
+
+        // POST DATA INIT
+        $postData = array_filter($parameters, function ($e) {
+            return urlencode($e);
+        });
+        $postString = http_build_query($postData);
+
         $headers = array(
             //~ "Content-Type: text/plain; charset=windows-1254",
             //~ "Content-Type: text/html; charset=ISO-8859-9",
@@ -21,26 +39,42 @@ class Curl
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_USERAGENT,
-            "Ysn-PhpApiConnector " . VERSION);
-        if (!$verify) {
+        curl_setopt($ch, CURLOPT_USERAGENT, "Unique1984-PhpApiConnector " . VERSION);
+
+        // SSL VERIFICATION
+        if (!$sslVerify) {
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         } else {
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
         }
+
+        // POST DATA
+        curl_setopt($ch, CURLOPT_POST, count($postData));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postString);
+
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-        //~ curl_setopt($ch, CURLOPT_HEADER, 1);
+        if ($debug) {
+            curl_setopt($ch, CURLOPT_HEADER, 1);
+        }
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_URL, $url);
+
+        // EXECUTE REQUEST
         $returnData = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            die("Curl Hata: " . curl_error($ch));
+        }
+
         $chInfo = curl_getinfo($ch);
-        $debug ? print_r($chInfo) : null;
+        if ($debug) {
+            print_r($chInfo);
+        }
         curl_close($ch);
-        //~ $returnData=json_encode($returnData);
-        //~ $returnData=json_decode($returnData);
+
         return $returnData;
     }
 
