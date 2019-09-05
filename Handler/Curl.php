@@ -20,15 +20,19 @@ class Curl
         // IS DEBUG MODE ENABLED
         $debug = false;
         $sslVerify = true;
+
         if ($devMode) {
             $debug = true;
             $sslVerify = false;
         }
 
         // POST DATA INIT
-        $postData = array_filter($parameters, function ($e) {
-            return urlencode($e);
-        });
+//        print_r($parameters);
+        $postData = array();
+        foreach ($parameters as $key => $val) {
+            $postData[$key] = urlencode($val);
+        }
+//        print_r($postData);
         $postString = http_build_query($postData);
 
         $headers = array(

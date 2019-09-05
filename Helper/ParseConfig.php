@@ -111,7 +111,7 @@ final class ParseConfig extends Api
     /**
      * @return bool
      */
-    protected function getDevMode()
+    public function getDevMode()
     {
         return $this->devMode;
     }

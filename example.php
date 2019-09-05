@@ -13,4 +13,4 @@
 include 'vendor/autoload.php';
 
 $a = new \PhpApiConnector\Api\Api();
-var_dump($a);
+//var_dump($a);
