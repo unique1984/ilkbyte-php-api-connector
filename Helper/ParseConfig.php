@@ -12,15 +12,6 @@ use PhpApiConnector\Api\Api as Api;
 
 final class ParseConfig extends Api
 {
-    protected $config;
-    protected $devMode;
-    protected $apiKey;
-    protected $apiSecret;
-    protected $sshKeys;
-    protected $handler;
-    protected $apiUrl;
-    protected $endPointUrlList;
-
     public function __construct()
     {
         if (!is_file(__DIR__ . "/../.config")) {
@@ -41,7 +32,6 @@ final class ParseConfig extends Api
             require_once __DIR__ . "/../.config.dev";
         }
 
-//        var_dump($configParameters);
         $this->setConfig($configParameters);
         $this->setDevMode($configParameters['devMode']);
         $this->setApiKey($configParameters['apiKey']);
@@ -106,77 +96,5 @@ final class ParseConfig extends Api
     private function setEndPointUrlList($endPointUrlList)
     {
         $this->endPointUrlList = $endPointUrlList;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getDevMode()
-    {
-        return $this->devMode;
-    }
-
-    /**
-     * @param mixed $devMode
-     */
-    protected function setDevMode($devMode)
-    {
-        $this->devMode = $devMode;
-    }
-
-    /**
-     * @return array
-     */
-    public function getConfig()
-    {
-        return $this->config;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getApiKey()
-    {
-        return $this->apiKey;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getApiSecret()
-    {
-        return $this->apiSecret;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSshKeys()
-    {
-        return $this->sshKeys;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getHandler()
-    {
-        return $this->handler;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getApiUrl()
-    {
-        return $this->apiUrl;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEndPointUrlList()
-    {
-        return $this->endPointUrlList;
     }
 }

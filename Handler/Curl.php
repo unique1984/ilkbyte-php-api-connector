@@ -6,11 +6,13 @@
  * http://ozgurlisanslar.org.tr/mit/
  */
 
-
 namespace PhpApiConnector\Handler;
 
 class Curl
 {
+    public $logs = array();
+    public $responseBody = array();
+
     public function apiCall(
         string $url,
         array $parameters = array(),
@@ -18,10 +20,8 @@ class Curl
     ) {
 
         // IS DEBUG MODE ENABLED
-        $debug = false;
         $sslVerify = true;
         if ($devMode) {
-            $debug = true;
             $sslVerify = false;
         }
 
@@ -29,6 +29,7 @@ class Curl
         $postData = array_map('urlencode', $parameters);
         $postString = http_build_query($postData);
 
+        // HEADERS INIT
         $headers = array(
             //~ "Content-Type: text/plain; charset=windows-1254",
             //~ "Content-Type: text/html; charset=ISO-8859-9",
@@ -37,8 +38,10 @@ class Curl
             "Content-Type: application/x-www-form-urlencoded" // form post
         );
 
+        // CURL INIT
         $ch = curl_init();
 
+        // CURL OPTIONS
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -54,33 +57,38 @@ class Curl
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
         }
 
-        // POST
+        // POST OPTIONS
         curl_setopt($ch,CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_POST, count($postData));
-//        curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postString);
 
+        // REDIRECTS
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
         curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-        if ($debug) {
-            curl_setopt($ch, CURLOPT_HEADER, 1);
-        }
+
+        // RESPONSE HEADER
+        curl_setopt($ch, CURLOPT_HEADER, 1);
 
         // EXECUTE REQUEST
         $returnData = curl_exec($ch);
 
-        if (curl_errno($ch)) {
-            die("Curl Error: " . curl_error($ch));
-        }
-
+        // GET ERRORS
+        $this->logs['error'] = curl_error($ch);
         $chInfo = curl_getinfo($ch);
-        if ($debug) {
-            print_r($chInfo);
-        }
+            $this->logs['info'] = $chInfo;
+
+        // GET HEADER
+        $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+            $this->logs['header'] = substr($returnData, 0, $header_size);
+
+        // GET RESPONSE BODY
+        $body = substr($returnData, $header_size);
+
+        // CLOSE
         curl_close($ch);
 
-        return $returnData;
+        $this->responseBody = json_decode($body, true);
     }
 
     public function getBinary($url, $saveTo)

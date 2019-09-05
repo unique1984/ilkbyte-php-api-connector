@@ -12,23 +12,133 @@ use PhpApiConnector\Helper\ParseConfig;
 
 class Api
 {
+    // Curl->apiCall Logs [error, info, header]
+    protected $logs;
+
+    // Config
+    protected $config;
+    protected $devMode;
+    protected $apiKey;
+    protected $apiSecret;
+    protected $sshKeys;
+    protected $handler;
+    protected $apiUrl;
+    protected $endPointUrlList;
+
+    // Response
+    protected $response;
+
     public function __construct()
     {
-        $config = new ParseConfig();
-//        echo http_build_query(array_merge($config->getApiKey(), $config->getApiSecret())) . "\n";
-//        $status = new StatusCheck("http://localhost/services", array(), $config->getDevMode());
-        $status = new StatusCheck(
-            $config->getApiUrl(),
-            array_merge(
-                $config->getApiKey(),
-                $config->getApiSecret()
-            ),
-            $config->getDevMode()
-        );
-
-        print_r(json_decode(json_encode($status->getStatus()), 1));
-
-//        var_dump($status->getStatus());
+        $this->config = new ParseConfig();
     }
 
+    public function getStatus()
+    {
+        // @TODO UrlBuilder ile url kontrolü ve oluşturulması eklenecek.
+
+        $statusCheck = new StatusCheck(
+            $this->config->getApiUrl(),
+            array_merge(
+                $this->config->getApiKey(),
+                $this->config->getApiSecret()
+            ),
+            $this->config->getDevMode()
+        );
+
+        // @TODO Ayrıca bir method içerisine alınacak...
+        if ($this->config->getDevMode()) {
+            print_r($statusCheck->getLogs());
+        }
+
+        return $statusCheck->getResponse();
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getApiUrl()
+    {
+        return $this->apiUrl;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getApiSecret()
+    {
+        return $this->apiSecret;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function getDevMode()
+    {
+        return $this->devMode;
+    }
+
+    /**
+     * @param mixed $devMode
+     */
+    protected function setDevMode($devMode)
+    {
+        $this->devMode = $devMode;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getLogs()
+    {
+        return $this->logs;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getResponse()
+    {
+        return $this->response;
+    }
+
+    /**
+     * @return ParseConfig
+     */
+    protected function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getSshKeys()
+    {
+        return $this->sshKeys;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getHandler()
+    {
+        return $this->handler;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getEndPointUrlList()
+    {
+        return $this->endPointUrlList;
+    }
 }

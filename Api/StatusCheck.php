@@ -12,29 +12,27 @@ use PhpApiConnector\Handler\Curl;
 
 final class StatusCheck extends Api
 {
-    private $status;
-
-    public function __construct($url, $parameters, $devMode)
+    public function __construct(string $url, array $parameters, bool $devMode)
     {
         $call = new Curl();
-        $status = $call->apiCall($url, $parameters, $devMode);
-        $this->setStatus($status);
+        $call->apiCall($url, $parameters, $devMode);
+        $this->setLogs($call->logs);
+        $this->setResponse($call->responseBody);
     }
 
     /**
-     * @return mixed
+     * @param mixed $logs
      */
-    public function getStatus()
+    private function setLogs($logs): void
     {
-        return $this->status;
+        $this->logs = $logs;
     }
 
     /**
-     * @param mixed $status
+     * @param $response
      */
-    private function setStatus($status): void
+    private function setResponse($response): void
     {
-        $this->status = $status;
+        $this->response = $response;
     }
-
 }
