@@ -8,6 +8,7 @@
 
 namespace PhpApiConnector\Api;
 
+use PhpApiConnector\Handler\ParseResponse;
 use PhpApiConnector\Helper\ParseConfig;
 
 class Api
@@ -27,6 +28,10 @@ class Api
 
     // Response
     protected $response;
+    protected $responseStatus;
+    protected $responseMessage;
+    protected $responseError;
+    protected $responseData = array();
 
     public function __construct()
     {
@@ -49,9 +54,11 @@ class Api
         // @TODO Ayrıca bir method içerisine alınacak...
         if ($this->config->getDevMode()) {
             print_r($statusCheck->getLogs());
+            print_r($statusCheck->getResponse());
         }
 
-        return $statusCheck->getResponse();
+        $parseResponse = new ParseResponse($statusCheck->getResponse());
+        return $parseResponse->getResponseStatus();
     }
 
     /**
@@ -108,6 +115,38 @@ class Api
     protected function getResponse()
     {
         return $this->response;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getResponseStatus()
+    {
+        return $this->responseStatus;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getResponseMessage()
+    {
+        return $this->responseMessage;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getResponseError()
+    {
+        return $this->responseError;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getResponseData(): array
+    {
+        return $this->responseData;
     }
 
     /**
