@@ -122,22 +122,6 @@ class Api implements EndPointUrlList, Version
     /**
      * @return mixed
      */
-    private function getApiKey()
-    {
-        return $this->apiKey;
-    }
-
-    /**
-     * @return mixed
-     */
-    private function getApiSecret()
-    {
-        return $this->apiSecret;
-    }
-
-    /**
-     * @return mixed
-     */
     private function getApiAccessPermission()
     {
         return $this->apiAccessPermission;
@@ -173,7 +157,7 @@ class Api implements EndPointUrlList, Version
     public function getAccessStatus(): bool
     {
         $check = new ApiAccessStatusCheck(
-            $this->endPoint->urlApi,
+            self::URL_API,
             $this->getDevMode(),
             $this->getApiCredentials()
         );
@@ -273,14 +257,6 @@ class Api implements EndPointUrlList, Version
     }
 
     /**
-     * @return ParseConfig
-     */
-    protected function getConfig()
-    {
-        return $this->config;
-    }
-
-    /**
      * @return mixed
      */
     protected function getSshKeys()
@@ -288,19 +264,4 @@ class Api implements EndPointUrlList, Version
         return $this->sshKeys;
     }
 
-    /**
-     * @return mixed
-     */
-    protected function getHandler()
-    {
-        return $this->handler;
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getEndPointUrlList()
-    {
-        return $this->endPointUrlList;
-    }
 }
