@@ -65,7 +65,7 @@ class Curl
         // REDIRECTS
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 15);
 
         // RESPONSE HEADER
         curl_setopt($ch, CURLOPT_HEADER, 1);
