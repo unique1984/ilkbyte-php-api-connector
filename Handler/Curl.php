@@ -8,7 +8,9 @@
 
 namespace PhpApiConnector\Handler;
 
-class Curl
+use PhpApiConnector\Helper\Version;
+
+class Curl implements Version
 {
     public $logs = array();
     public $responseBody = array();
@@ -45,7 +47,8 @@ class Curl
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_USERAGENT, "Unique1984-PhpApiConnector " . VERSION . " - " . REPOSITORY);
+        curl_setopt($ch, CURLOPT_USERAGENT,
+            "Unique1984-PhpApiConnector " . self::VERSION . " - " . self::REPOSITORY);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         // SSL VERIFICATION
@@ -67,20 +70,21 @@ class Curl
         curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
         curl_setopt($ch, CURLOPT_TIMEOUT, 15);
 
+        // REQUEST HEADER
+        curl_setopt($ch, CURLINFO_HEADER_OUT, true);
         // RESPONSE HEADER
-        curl_setopt($ch, CURLOPT_HEADER, 1);
+        curl_setopt($ch, CURLOPT_HEADER, true);
 
         // EXECUTE REQUEST
         $returnData = curl_exec($ch);
 
         // GET ERRORS
         $this->logs['error'] = curl_error($ch);
-        $chInfo = curl_getinfo($ch);
-            $this->logs['info'] = $chInfo;
+        $this->logs['info'] = curl_getinfo($ch);
 
-        // GET HEADER
+        // GET RESPONSE HEADER
         $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-            $this->logs['header'] = substr($returnData, 0, $header_size);
+        $this->logs['response_header'] = substr($returnData, 0, $header_size);
 
         // GET RESPONSE BODY
         $body = substr($returnData, $header_size);

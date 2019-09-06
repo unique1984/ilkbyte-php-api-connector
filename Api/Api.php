@@ -9,46 +9,46 @@
 namespace PhpApiConnector\Api;
 
 use PhpApiConnector\Handler\ParseResponse;
-use PhpApiConnector\Helper\ParseConfig;
+use PhpApiConnector\Helper\Version;
 
-class Api
+class Api implements EndPointUrlList, Version
 {
-    // Curl->apiCall Logs [error, info, header]
+    // Curl->apiCall Logs [error, info, response_header]
     protected $logs;
 
     // Config
-    protected $config;
     protected $devMode;
     protected $apiKey;
     protected $apiSecret;
     protected $sshKeys;
-    protected $apiUrl;
-//    protected $handler;
-    protected $response;
-//    protected $endPointUrlList;
+    private $apiCredentials;
 
     // Response And Status
+    protected $response;
     protected $responseStatus;
     protected $responseMessage;
     protected $responseError;
     protected $responseData;
-    private $apiCredentials;
 
     // Access
     private $apiAccess;
     private $apiAccessPermission;
     private $apiAccessErrors;
 
-    public function __construct()
+    public function __construct(
+        string $apiKey,
+        string $apiSecret,
+        string $sshPublicKeys,
+        bool $devMode = false
+    )
     {
-        $this->config = new ParseConfig();
+        $this->setApiCredentials($apiKey, $apiSecret);
+        $this->setDevMode($devMode);
 
         // Check is Api Available
         if (!$this->getApiStatus()) {
             die("Api Down!");
         }
-
-        $this->setApiCredentials();
     }
 
     /**
@@ -57,8 +57,8 @@ class Api
     private function getApiStatus(): bool
     {
         $check = new ApiStatusCheck(
-            $this->config->getApiUrl(),
-            $this->config->getDevMode()
+            self::URL_API,
+            $this->getDevMode()
         );
 
         $this(
@@ -68,14 +68,6 @@ class Api
 
         $parseResponse = new ParseResponse($check->getResponse());
         return $parseResponse->getResponseStatus();
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getApiUrl()
-    {
-        return $this->apiUrl;
     }
 
     /**
@@ -118,11 +110,11 @@ class Api
         return $this->responseStatus;
     }
 
-    private function setApiCredentials(): void
+    private function setApiCredentials($apiKey, $apiSecret): void
     {
-        $apiCredentials = array_merge(
-            $this->config->getApiKey(),
-            $this->config->getApiSecret()
+        $apiCredentials = array(
+            'access' => $apiKey,
+            'secret' => $apiSecret
         );
         $this->apiCredentials = $apiCredentials;
     }
@@ -181,8 +173,8 @@ class Api
     public function getAccessStatus(): bool
     {
         $check = new ApiAccessStatusCheck(
-            $this->config->getApiUrl(),
-            $this->config->getDevMode(),
+            $this->endPoint->urlApi,
+            $this->getDevMode(),
             $this->getApiCredentials()
         );
 
@@ -253,12 +245,12 @@ class Api
     }
 
     /**
-     * @param array $logs
-     * @param array $response
+     * @param null|array $logs
+     * @param null|array $response
      */
-    public function __invoke(array $logs, array $response)
+    public function __invoke($logs, $response)
     {
-        if ($this->config->getDevMode()) {
+        if ($this->getDevMode() && !is_null($logs) || !is_null($response)) {
             print_r($logs);
             print_r($response);
         }
