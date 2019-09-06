@@ -15,8 +15,8 @@ class Curl
 
     public function apiCall(
         string $url,
-        array $parameters = array(),
-        bool $devMode = false
+        bool $devMode = false,
+        array $parameters = array()
     ) {
 
         // IS DEBUG MODE ENABLED

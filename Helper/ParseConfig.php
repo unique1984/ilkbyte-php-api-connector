@@ -37,9 +37,9 @@ final class ParseConfig extends Api
         $this->setApiKey($configParameters['apiKey']);
         $this->setApiSecret($configParameters['apiSecret']);
         $this->setSshKeys($configParameters['sshKeys']);
-        $this->setHandler($configParameters['handler']);
+//        $this->setHandler($configParameters['handler']);
         $this->setApiUrl($configParameters['apiUrl']);
-        $this->setEndPointUrlList($configParameters['endPointUrlList']);
+//        $this->setEndPointUrlList($configParameters['endPointUrlList']);
     }
 
     /**

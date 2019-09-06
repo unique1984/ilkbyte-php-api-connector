@@ -10,12 +10,12 @@ namespace PhpApiConnector\Api;
 
 use PhpApiConnector\Handler\Curl;
 
-final class StatusCheck extends Api
+final class ApiAccessStatusCheck extends Api
 {
-    public function __construct(string $url, array $parameters, bool $devMode)
+    public function __construct(string $url, bool $devMode = false, array $parameters = array())
     {
         $call = new Curl();
-        $call->apiCall($url, $parameters, $devMode);
+        $call->apiCall($url, $devMode, $parameters);
         $this->setLogs($call->logs);
         $this->setResponse($call->responseBody);
     }

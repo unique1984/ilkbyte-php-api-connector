@@ -22,42 +22,51 @@ class Api
     protected $apiKey;
     protected $apiSecret;
     protected $sshKeys;
-    protected $handler;
     protected $apiUrl;
-    protected $endPointUrlList;
-
-    // Response
+//    protected $handler;
     protected $response;
+//    protected $endPointUrlList;
+
+    // Response And Status
     protected $responseStatus;
     protected $responseMessage;
     protected $responseError;
-    protected $responseData = array();
+    protected $responseData;
+    private $apiCredentials;
+
+    // Access
+    private $apiAccess;
+    private $apiAccessPermission;
+    private $apiAccessErrors;
 
     public function __construct()
     {
         $this->config = new ParseConfig();
+
+        // Check is Api Available
+        if (!$this->getApiStatus()) {
+            die("Api Down!");
+        }
+
+        $this->setApiCredentials();
     }
 
-    public function getStatus()
+    /**
+     * @return bool
+     */
+    private function getApiStatus(): bool
     {
-        // @TODO UrlBuilder ile url kontrolü ve oluşturulması eklenecek.
-
-        $statusCheck = new StatusCheck(
+        $check = new ApiStatusCheck(
             $this->config->getApiUrl(),
-            array_merge(
-                $this->config->getApiKey(),
-                $this->config->getApiSecret()
-            ),
             $this->config->getDevMode()
         );
 
-        // @TODO Ayrıca bir method içerisine alınacak...
-        if ($this->config->getDevMode()) {
-            print_r($statusCheck->getLogs());
-            print_r($statusCheck->getResponse());
-        }
+        $this(
+            $check->getLogs(),
+            $check->getResponse()
+        );
 
-        $parseResponse = new ParseResponse($statusCheck->getResponse());
+        $parseResponse = new ParseResponse($check->getResponse());
         return $parseResponse->getResponseStatus();
     }
 
@@ -67,22 +76,6 @@ class Api
     protected function getApiUrl()
     {
         return $this->apiUrl;
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getApiKey()
-    {
-        return $this->apiKey;
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getApiSecret()
-    {
-        return $this->apiSecret;
     }
 
     /**
@@ -125,6 +118,152 @@ class Api
         return $this->responseStatus;
     }
 
+    private function setApiCredentials(): void
+    {
+        $apiCredentials = array_merge(
+            $this->config->getApiKey(),
+            $this->config->getApiSecret()
+        );
+        $this->apiCredentials = $apiCredentials;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getApiKey()
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getApiSecret()
+    {
+        return $this->apiSecret;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getApiAccessPermission()
+    {
+        return $this->apiAccessPermission;
+    }
+
+    /**
+     * @param mixed $apiAccessPermission
+     */
+    private function setApiAccessPermission($apiAccessPermission): void
+    {
+        $this->apiAccessPermission = $apiAccessPermission;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getApiAccessErrors()
+    {
+        return $this->apiAccessErrors;
+    }
+
+    /**
+     * @param mixed $apiAccessErrors
+     */
+    private function setApiAccessErrors($apiAccessErrors): void
+    {
+        $this->apiAccessErrors = $apiAccessErrors;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getAccessStatus(): bool
+    {
+        $check = new ApiAccessStatusCheck(
+            $this->config->getApiUrl(),
+            $this->config->getDevMode(),
+            $this->getApiCredentials()
+        );
+
+        $this(
+            $check->getLogs(),
+            $check->getResponse()
+        );
+
+        $parseResponse = new ParseResponse($check->getResponse());
+
+        $apiAccessData = $parseResponse->getResponseData();
+        $this->setApiAccess($apiAccessData['api_access']);
+        $this->setApiAccessErrors(null);
+        if (isset($apiAccessData['errors'])) {
+            $this->setApiAccessErrors($apiAccessData['errors']);
+        }
+        $this->setApiAccessPermission($apiAccessData['permission']);
+
+        return $this->getApiAccess();
+    }
+
+    /**
+     * @return array
+     */
+    private function getApiCredentials(): array
+    {
+        return $this->apiCredentials;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getResponseData(): array
+    {
+        return $this->responseData;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getApiAccess()
+    {
+        return $this->apiAccess;
+    }
+
+    /**
+     * @param mixed $apiAccess
+     */
+    private function setApiAccess($apiAccess): void
+    {
+        $this->apiAccess = $apiAccess;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAccessError(): ?string
+    {
+        // if AccessStatus false; get key response->data->errors
+    }
+
+    /**
+     * @return string
+     */
+    public function getAccessPermission(): ?string
+    {
+        // if AccessStatus true; get key -> response->data->permission
+    }
+
+    /**
+     * @param array $logs
+     * @param array $response
+     */
+    public function __invoke(array $logs, array $response)
+    {
+        if ($this->config->getDevMode()) {
+            print_r($logs);
+            print_r($response);
+        }
+    }
+
     /**
      * @return mixed
      */
@@ -139,14 +278,6 @@ class Api
     protected function getResponseError()
     {
         return $this->responseError;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getResponseData(): array
-    {
-        return $this->responseData;
     }
 
     /**
