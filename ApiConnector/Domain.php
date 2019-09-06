@@ -7,7 +7,7 @@
  */
 
 
-namespace PhpApiConnector\Api;
+namespace PhpApiConnector\ApiConnector;
 
 class Domain
 {

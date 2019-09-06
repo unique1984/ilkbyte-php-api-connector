@@ -12,6 +12,6 @@
  * */
 include 'vendor/autoload.php';
 
-$a = new \PhpApiConnector\Api\Api();
-//$a->
-var_dump($a->getAccessStatus());
+$a = new \PhpApiConnector\ApiConnector\ApiConnector();
+
+var_dump($a->checkApiAccess());

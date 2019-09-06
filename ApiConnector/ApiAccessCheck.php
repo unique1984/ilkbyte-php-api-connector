@@ -6,16 +6,23 @@
  * http://ozgurlisanslar.org.tr/mit/
  */
 
-namespace PhpApiConnector\Api;
+namespace PhpApiConnector\ApiConnector;
 
 use PhpApiConnector\Handler\Curl;
 
-final class ApiStatusCheck extends Api
+final class ApiAccessCheck extends ApiConnector
 {
-    public function __construct(string $url, bool $devMode = false, array $parameters = array())
+    public function __construct(array $parameters = array())
     {
+//        var_dump($this->getDevMode());
+        var_dump($this->devMode);
+        var_dump(self::URL_API);
+        print_r($parameters);
+
+        die;
+
         $call = new Curl();
-        $call->apiCall($url, $devMode, $parameters);
+        $call->apiCall(self::URL_API, $devMode, $parameters);
         $this->setLogs($call->logs);
         $this->setResponse($call->responseBody);
     }

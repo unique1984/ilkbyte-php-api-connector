@@ -7,8 +7,8 @@
  */
 
 
-namespace PhpApiConnector\Api;
+namespace PhpApiConnector\ApiConnector;
 
-class Backup
+class Log
 {
 }

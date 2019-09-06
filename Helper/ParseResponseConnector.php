@@ -8,9 +8,9 @@
 
 namespace PhpApiConnector\Handler;
 
-use PhpApiConnector\Api\Api;
+use PhpApiConnector\ApiConnector\ApiConnector;
 
-class ParseResponse extends Api
+class ParseResponse extends ApiConnector
 {
     public function __construct($response)
     {

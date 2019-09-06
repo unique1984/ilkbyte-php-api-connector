@@ -6,11 +6,11 @@
  * http://ozgurlisanslar.org.tr/mit/
  */
 
-namespace PhpApiConnector\Api;
+namespace PhpApiConnector\ApiConnector;
 
 use PhpApiConnector\Handler\Curl;
 
-final class ApiAccessStatusCheck extends Api
+final class ApiStatusCheck extends ApiConnector
 {
     public function __construct(string $url, bool $devMode = false, array $parameters = array())
     {
