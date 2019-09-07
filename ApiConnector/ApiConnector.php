@@ -859,7 +859,28 @@ class ApiConnector implements EndPointUrlList, StaticValues, Version, Errors
         return $parseResponse->getResponseData();
     }
 
+    public function accountInfo()
+    {
+        $check = new ApiAccountInfo(
+            $this->getApiCredentials(),
+            $this->getDevMode()
+        );
 
+        $this(
+            $check->getLogs(),
+            $check->getResponse()
+        );
+
+        $parseResponse = new ParseResponse($check->getResponse());
+        $this->checkApiStatus(
+            $parseResponse->getResponseStatus(),
+            $parseResponse->getResponseError()
+        );
+
+        // $parseResponse->getResponseMessage();
+
+        return $parseResponse->getResponseData();
+    }
 
     /**
      * @param null|array $logs
