@@ -280,6 +280,34 @@ class ApiConnector implements EndPointUrlList, Version, Errors
             $parseResponse->getResponseStatus(),
             $parseResponse->getResponseError()
         );
+
+        // $parseResponse->getResponseMessage();
+
+        return $parseResponse->getResponseData();
+    }
+
+    public function serverStatus($serverName)
+    {
+        $check = new ApiServerStatus(
+            $serverName,
+            $this->getApiCredentials(),
+            $this->getDevMode()
+        );
+
+        $this(
+            $check->getLogs(),
+            $check->getResponse()
+        );
+
+        $parseResponse = new ParseResponse($check->getResponse());
+        $this->checkApiStatus(
+            $parseResponse->getResponseStatus(),
+            $parseResponse->getResponseError()
+        );
+
+        // $parseResponse->getResponseMessage();
+
+        return $parseResponse->getResponseData();
     }
 
     /**
