@@ -882,6 +882,30 @@ class ApiConnector implements EndPointUrlList, StaticValues, Version, Errors
         return $parseResponse->getResponseData();
     }
 
+    public function accountPayment()
+    {
+        $check = new ApiAccountPayment(
+            $this->getApiCredentials(),
+            $this->getDevMode()
+        );
+
+        $this(
+            $check->getLogs(),
+            $check->getResponse()
+        );
+
+        die("Gerisi Api faaliyete geçince...");
+        $parseResponse = new ParseResponse($check->getResponse());
+        $this->checkApiStatus(
+            $parseResponse->getResponseStatus(),
+            $parseResponse->getResponseError()
+        );
+
+        // $parseResponse->getResponseMessage();
+
+        return $parseResponse->getResponseData();
+    }
+
     /**
      * @param null|array $logs
      * @param null|array $response
