@@ -40,7 +40,9 @@ interface EndPointUrlList
     const URL_DOMAIN_ADD_RECORD = 'http://services/api/%s'; // FAKE EndPoint Test Purposes
 //    const URL_DOMAIN_UPDATE = '/domain/manage/%s/update';
     const URL_DOMAIN_UPDATE = 'http://services/api/%s'; // FAKE EndPoint Test Purposes
-    const URL_DOMAIN_DELETE = '/domain/manage/%s/delete';
+//    const URL_DOMAIN_DELETE = '/domain/manage/%s/delete';
+    const URL_DOMAIN_DELETE = 'http://services/api/%s'; // FAKE EndPoint Test Purposes
     const URL_ACCOUNT = '/account';
 //    const URL_ACCOUNT_PAYMENT = '/account/payment';    // Developing
+    const URL_ACCOUNT_PAYMENT = 'http://services/api'; // FAKE EndPoint Test Purposes
 }
