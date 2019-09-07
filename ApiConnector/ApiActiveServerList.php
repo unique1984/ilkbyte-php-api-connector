@@ -10,13 +10,14 @@ namespace PhpApiConnector\ApiConnector;
 
 use PhpApiConnector\Handler\Curl;
 
-final class ApiStatusCheck extends ApiConnector
+final class ApiActiveServerList extends ApiConnector
 {
-    public function __construct(string $url, bool $devMode = false, array $parameters = array())
+    public function __construct(array $parameters = array(), $devMode = false)
     {
         $call = new Curl();
+        $url = self::URL_API . self::URL_SERVER_LIST;
         $call->apiCall($url, $devMode, $parameters);
-        $this->setLogs($call->logs);
+        $this->setLogs($call->apiCallLogs);
         $this->setResponse($call->responseBody);
     }
 
@@ -25,7 +26,7 @@ final class ApiStatusCheck extends ApiConnector
      */
     private function setLogs($logs): void
     {
-        $this->logs = $logs;
+        $this->apiCallLogs = $logs;
     }
 
     /**

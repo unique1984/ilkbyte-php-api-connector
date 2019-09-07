@@ -44,17 +44,6 @@ class ApiConnector implements EndPointUrlList, Version, Errors
         $this->apiCredentials = $apiCredentials;
     }
 
-    private function checkApiStatus($status, $error)
-    {
-        if (!$status) {
-            die(self::ERROR_API_DOWN);
-        }
-
-        if (!is_null($error)) {
-            die(self::ERROR_API_ERROR . $this->getResponseError());
-        }
-    }
-
     public function checkApiAccess()
     {
         $check = new ApiAccessCheck(
@@ -89,7 +78,7 @@ class ApiConnector implements EndPointUrlList, Version, Errors
     /**
      * @return mixed
      */
-    public function getDevMode()
+    protected function getDevMode()
     {
         return $this->devMode;
     }
@@ -97,7 +86,7 @@ class ApiConnector implements EndPointUrlList, Version, Errors
     /**
      * @param mixed $devMode
      */
-    public function setDevMode($devMode): void
+    protected function setDevMode($devMode): void
     {
         $this->devMode = $devMode;
     }
@@ -118,18 +107,21 @@ class ApiConnector implements EndPointUrlList, Version, Errors
         return $this->response;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getResponseStatus()
+    private function checkApiStatus($status, $error)
     {
-        return $this->responseStatus;
+        if (!$status) {
+            die(self::ERROR_API_DOWN);
+        }
+
+        if (!is_null($error)) {
+            die(self::ERROR_API_ERROR . $this->getResponseError());
+        }
     }
 
     /**
      * @return mixed
      */
-    public function getResponseError()
+    protected function getResponseError()
     {
         return $this->responseError;
     }
@@ -137,17 +129,63 @@ class ApiConnector implements EndPointUrlList, Version, Errors
     /**
      * @return mixed
      */
-    public function getResponseData()
+    protected function getResponseStatus()
     {
-        return $this->responseData;
+        return $this->responseStatus;
     }
 
     /**
      * @return mixed
      */
-    public function getResponseMessage()
+    protected function getResponseData()
     {
-        return $this->responseMessage;
+        return $this->responseData;
+    }
+
+    public function activeServers()
+    {
+        $check = new ApiActiveServerList(
+            $this->getApiCredentials(),
+            $this->getDevMode()
+        );
+
+        $this(
+            $check->getLogs(),
+            $check->getResponse()
+        );
+
+        $parseResponse = new ParseResponse($check->getResponse());
+        $this->checkApiStatus(
+            $parseResponse->getResponseStatus(),
+            $parseResponse->getResponseError()
+        );
+
+        // $parseResponse->getResponseMessage();
+
+        return $parseResponse->getResponseData();
+    }
+
+    public function allServers()
+    {
+        $check = new ApiAllServerList(
+            $this->getApiCredentials(),
+            $this->getDevMode()
+        );
+
+        $this(
+            $check->getLogs(),
+            $check->getResponse()
+        );
+
+        $parseResponse = new ParseResponse($check->getResponse());
+        $this->checkApiStatus(
+            $parseResponse->getResponseStatus(),
+            $parseResponse->getResponseError()
+        );
+
+        // $parseResponse->getResponseMessage();
+
+        return $parseResponse->getResponseData();
     }
 
     /**
@@ -160,6 +198,14 @@ class ApiConnector implements EndPointUrlList, Version, Errors
             print_r($logs);
             print_r($response);
         }
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getResponseMessage()
+    {
+        return $this->responseMessage;
     }
 
     /**
