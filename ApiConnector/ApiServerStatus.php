@@ -15,7 +15,6 @@ final class ApiServerStatus extends ApiConnector
     public function __construct(string $serverName, array $parameters = array(), $devMode = false)
     {
         $url = sprintf(self::URL_API . self::URL_SERVER_STATUS, $serverName);
-        echo $url;
         $call = new Curl();
         $call->apiCall($url, $devMode, $parameters);
         $this->setLogs($call->apiCallLogs);
