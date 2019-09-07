@@ -9,10 +9,11 @@
 namespace PhpApiConnector\ApiConnector;
 
 use PhpApiConnector\Handler\ParseResponse;
-use PhpApiConnector\Helper\Errors;
+use PhpApiConnector\Helper\StaticValues;
 use PhpApiConnector\Helper\Version;
+use PhpApiConnector\Helper\Errors;
 
-class ApiConnector implements EndPointUrlList, Version, Errors
+class ApiConnector implements EndPointUrlList, StaticValues, Version, Errors
 {
     protected $devMode;
     protected $apiCallLogs;
@@ -669,6 +670,57 @@ class ApiConnector implements EndPointUrlList, Version, Errors
 
         die("Gerisi Api faaliyete geçince...");
         $parseResponse = new ParseResponse($push->getResponse());
+        $this->checkApiStatus(
+            $parseResponse->getResponseStatus(),
+            $parseResponse->getResponseError()
+        );
+
+        // $parseResponse->getResponseMessage();
+
+        return $parseResponse->getResponseData();
+    }
+
+    public function domainAddRecord(
+        string $domain,
+        string $recordName,
+        string $recordType,
+        string $recordContent,
+        int $recordPriority,
+        bool $pushIt = false
+    )
+    {
+        $recordType = strtoupper($recordType);
+        if (!in_array($recordType, self::VALUE_DNS_RECORD_TYPES)) {
+            die(self::ERROR_DNS_RECORD_TYPE_WRONG);
+        }
+
+        $parameters = array_merge(
+            $this->getApiCredentials(),
+            [
+                'record_name' => $recordName,
+                'record_type' => $recordType,
+                'record_content' => $recordContent,
+                'record_priority' => $recordPriority,
+            ]
+        );
+
+        $add = new ApiDomainAddRecord(
+            $domain,
+            $parameters,
+            $this->getDevMode()
+        );
+
+        $this(
+            $add->getLogs(),
+            $add->getResponse()
+        );
+
+        if ($pushIt) {
+            $this->domainPush($domain);
+        }
+
+        die("Gerisi Api faaliyete geçince...");
+        $parseResponse = new ParseResponse($add->getResponse());
         $this->checkApiStatus(
             $parseResponse->getResponseStatus(),
             $parseResponse->getResponseError()
