@@ -31,12 +31,13 @@ interface EndPointUrlList
     const URL_BACKUP_REVERT = 'http://services/api/%s'; // FAKE EndPoint Test Purposes
     /* %s -> domain name */
     const URL_DOMAIN_LIST = '/domain/list';
+//    const URL_DOMAIN_PUSH = '/domain/manage/%s/push';
+    const URL_DOMAIN_PUSH = 'http://services/api/%s'; // FAKE EndPoint Test Purposes
     const URL_DOMAIN_CREATE = '/domain/create';
     const URL_DOMAIN_SHOW = '/domain/manage/%s/show';
     const URL_DOMAIN_ADD = '/domain/manage/%s/add';
     const URL_DOMAIN_UPDATE = '/domain/manage/%s/update';
     const URL_DOMAIN_DELETE = '/domain/manage/%s/delete';
-    const URL_DOMAIN_PUSH = '/domain/manage/%s/push';
     const URL_ACCOUNT = '/account';
 //    const URL_ACCOUNT_PAYMENT = '/account/payment';    // Developing
 }
