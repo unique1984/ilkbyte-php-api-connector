@@ -236,6 +236,70 @@ class ApiConnector implements EndPointUrlList, Version, Errors
         return $deleted;
     }
 
+    public function createServer(
+        string $username,
+        string $password,
+        string $serverName,
+        int $osId,
+        int $appId,
+        int $packageId,
+        bool $sshKeys = true
+    ) {
+        // ön kontrol mekanizması eklenebilir, (os_id > 0 ? app_id = 0) (server name mevcut, paket yok gibi)
+        $parameters = [
+            'username' => $username,
+            'password' => $password,
+            'name' => $serverName,
+            'os_id' => $osId,
+            'appId' => $appId,
+            'package_id' => $packageId
+        ];
+
+        $postData = array_merge(
+            $this->getApiCredentials(),
+            $parameters
+        );
+
+        if ($sshKeys) {
+            $postData = array_merge($postData, $this->getSshKeys());
+        }
+
+        $create = new ApiCreateServer(
+            $postData,
+            $this->getDevMode()
+        );
+
+        $this(
+            $create->getLogs(),
+            $create->getResponse()
+        );
+
+        die("Gerisi Api faaliyete geçince...");
+        $parseResponse = new ParseResponse($create->getResponse());
+        $this->checkApiStatus(
+            $parseResponse->getResponseStatus(),
+            $parseResponse->getResponseError()
+        );
+    }
+
+    /**
+     * @return array
+     */
+    protected function getSshKeys(): array
+    {
+        return $this->sshKeys;
+    }
+
+    /**
+     * @param mixed $sshKeys
+     */
+    protected function setSshKeys($sshKeys): void
+    {
+        $this->sshKeys = array(
+            'sshkey' => $sshKeys
+        );
+    }
+
     public function serverReadyApplications()
     {
         $check = new ApiServerReadyApplications(
@@ -350,24 +414,6 @@ class ApiConnector implements EndPointUrlList, Version, Errors
     protected function getResponseMessage()
     {
         return $this->responseMessage;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getSshKeys(): array
-    {
-        return $this->sshKeys;
-    }
-
-    /**
-     * @param mixed $sshKeys
-     */
-    protected function setSshKeys($sshKeys): void
-    {
-        $this->sshKeys = array(
-            'sshkey' => $sshKeys
-        );
     }
 
 }

@@ -15,6 +15,7 @@ interface EndPointUrlList
     const URL_SERVER_LIST_ALL = '/server/list/all';
     const URL_SERVER_CREATE = '/server/create';
 //    const URL_SERVER_CREATE_CONFIG = '/server/create/config'; // Developing
+    const URL_SERVER_CREATE_CONFIG = 'http://services/api'; // FAKE EndPoint Test Purposes
     /* %s -> server name */
     const URL_SERVER_STATUS = '/server/manage/%s/show';
 //    const URL_SERVER_MONITOR = '/server/manage/%s/monitor'; // Developing

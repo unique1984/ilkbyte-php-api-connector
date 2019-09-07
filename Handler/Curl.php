@@ -48,7 +48,7 @@ class Curl implements Version
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_USERAGENT,
-            "Unique1984-PhpApiConnector " . self::VERSION . " - " . self::REPOSITORY);
+            "unique1984-PhpApiConnector " . self::VERSION . " " . self::REPOSITORY);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         // SSL VERIFICATION
