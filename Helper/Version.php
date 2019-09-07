@@ -10,6 +10,9 @@ namespace PhpApiConnector\Helper;
 
 interface Version
 {
+    /*
+        [major].[minor].[patch].[bug|fix]
+    */
     const VERSION = 'v0.0.1';
     const REPOSITORY = 'https://github.com/unique1984/ilkbyte-php-api-connector';
 }

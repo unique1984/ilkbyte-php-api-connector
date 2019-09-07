@@ -286,6 +286,64 @@ class ApiConnector implements EndPointUrlList, Version, Errors
         return $parseResponse->getResponseData();
     }
 
+    public function addRdns(
+        string $serverName,
+        string $ip,
+        string $rdns
+    )
+    {
+        $parameters = [
+            'ip' => $ip,
+            'rdns' => $rdns
+        ];
+
+        $postData = array_merge(
+            $this->getApiCredentials(),
+            $parameters
+        );
+
+        $add = new ApiAddRdns(
+            $serverName,
+            $postData,
+            $this->getDevMode()
+        );
+
+        $this(
+            $add->getLogs(),
+            $add->getResponse()
+        );
+
+        die("Gerisi Api faaliyete geçince...");
+        $parseResponse = new ParseResponse($create->getResponse());
+        $this->checkApiStatus(
+            $parseResponse->getResponseStatus(),
+            $parseResponse->getResponseError()
+        );
+
+        // $parseResponse->getResponseMessage();
+
+        return $parseResponse->getResponseData();
+    }
+
+
+    /**
+     * @return array
+     */
+    protected function getSshKeys(): array
+    {
+        return $this->sshKeys;
+    }
+
+    /**
+     * @param mixed $sshKeys
+     */
+    protected function setSshKeys($sshKeys): void
+    {
+        $this->sshKeys = array(
+            'sshkey' => $sshKeys
+        );
+    }
+
     public function serverStatus($serverName)
     {
         $check = new ApiServerStatus(
@@ -361,24 +419,6 @@ class ApiConnector implements EndPointUrlList, Version, Errors
         // $parseResponse->getResponseMessage();
 
         return $parseResponse->getResponseData();
-    }
-
-    /**
-     * @return array
-     */
-    protected function getSshKeys(): array
-    {
-        return $this->sshKeys;
-    }
-
-    /**
-     * @param mixed $sshKeys
-     */
-    protected function setSshKeys($sshKeys): void
-    {
-        $this->sshKeys = array(
-            'sshkey' => $sshKeys
-        );
     }
 
     public function serverReadyApplications()

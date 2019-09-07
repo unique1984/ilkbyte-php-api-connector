@@ -20,7 +20,8 @@ interface EndPointUrlList
     const URL_SERVER_STATUS = '/server/manage/%s/show';
     const URL_SERVER_MONITOR = '/server/manage/%s/monitor';
     const URL_POWER = '/server/manage/%s/power';
-    const URL_IP_RDNS = '/server/manage/%s/ip/rdns';
+//    const URL_IP_RDNS = '/server/manage/%s/ip/rdns';
+    const URL_IP_RDNS = 'http://services/api/%s'; // FAKE EndPoint Test Purposes
     const URL_LOGS = '/server/manage/%s/ip/logs';
     const URL_SNAPSHOT_LIST = '/server/manage/%s/snapshot/list';
     const URL_SNAPSHOT_REVERT = '/server/manage/%s/snapshot/revert';
