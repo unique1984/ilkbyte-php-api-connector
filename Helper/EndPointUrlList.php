@@ -27,7 +27,8 @@ interface EndPointUrlList
 //    const URL_SNAPSHOT_REVERT = '/server/manage/%s/snapshot/revert';
     const URL_SNAPSHOT_REVERT = 'http://services/api/%s'; // FAKE EndPoint Test Purposes
     const URL_BACKUP_LIST = '/server/manage/%s/backup/list';
-    const URL_BACKUP_REVERT = '/server/manage/%s/backup/revert';
+//    const URL_BACKUP_REVERT = '/server/manage/%s/backup/revert';
+    const URL_BACKUP_REVERT = 'http://services/api/%s'; // FAKE EndPoint Test Purposes
     /* %s -> domain name */
     const URL_DOMAIN_LIST = '/domain/list';
     const URL_DOMAIN_CREATE = '/domain/create';

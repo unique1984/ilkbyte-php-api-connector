@@ -294,6 +294,40 @@ class ApiConnector implements EndPointUrlList, Version, Errors
         return $parseResponse->getResponseData();
     }
 
+    public function backupRevert(string $serverName, int $backupId)
+    {
+        $parameters = [
+            'backup_id' => $backupId,
+        ];
+
+        $postData = array_merge(
+            $this->getApiCredentials(),
+            $parameters
+        );
+
+        $revert = new ApiBackupRevert(
+            $serverName,
+            $postData,
+            $this->getDevMode()
+        );
+
+        $this(
+            $revert->getLogs(),
+            $revert->getResponse()
+        );
+
+        die("Gerisi Api faaliyete geçince...");
+        $parseResponse = new ParseResponse($revert->getResponse());
+        $this->checkApiStatus(
+            $parseResponse->getResponseStatus(),
+            $parseResponse->getResponseError()
+        );
+
+        // $parseResponse->getResponseMessage();
+
+        return $parseResponse->getResponseData();
+    }
+
     public function deletedServers()
     {
         $check = new ApiAccessCheck(
