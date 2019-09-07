@@ -173,16 +173,112 @@ array (size=6)
 
 **silinmiş** ve **iptal** durumundaki sunucular için, kolaylık sağlaması adına ayrıca iki adet method oluşturulmuştur. 
 
-`deletedServers();` Silinmiş sunucular.
+`deletedServers();` Silinmiş sunucular. [Örnek Kullanım](https://github.com/unique1984/ilkbyte-php-api-connector/blob/master/Examples/deletedServers.php)
 
-`canceledServers();` İptal edilmiş sunucular.
+`canceledServers();` İptal edilmiş sunucular. [Örnek Kullanım](https://github.com/unique1984/ilkbyte-php-api-connector/blob/master/Examples/canceledServers.php)
 
 ---
 
-- serverReadyApplications();
-- serverOperatingSystems();
-- serverPackages();
-- createServer(...); // **API Geliştiriliyor**
+`serverReadyApplications();`
+
+[Örnek Kullanım](https://github.com/unique1984/ilkbyte-php-api-connector/blob/master/Examples/serverReadyApplications.php)
+
+Hesabınıza yeni sunucu eklemek istediğinizde listelenen hazır uygulamaların listesi.
+
+```php
+/var/www/ilkbytephpapi/PhpApiConnector/example/serverReadyApplications.php:21:
+array (size=1)
+  0 => 
+    array (size=3)
+      'code' => int 2
+      'name' => string 'Minio' (length=5)
+      'system' => string 'Ubuntu 16.04 LTS' (length=16)
+```
+
+---
+
+`serverOperatingSystems();`
+
+[Örnek Kullanım](https://github.com/unique1984/ilkbyte-php-api-connector/blob/master/Examples/serverOperatingSystems.php)
+
+Hesabınıza yeni sunucu eklemek istediğinizde kullanabileceğiniz işletim sistemlerinin listesi.
+
+```php
+/var/www/ilkbytephpapi/PhpApiConnector/example/serverOperatingSystems.php:21:
+array (size=6)
+  0 => 
+    array (size=3)
+      'code' => int 1
+      'name' => string 'Ubuntu' (length=6)
+      'version' => string '16.04 LTS' (length=9)
+  1 => 
+    array (size=3)
+      'code' => int 3
+      'name' => string 'CentOS' (length=6)
+      'version' => string '7' (length=1)
+  2 => 
+    array (size=3)
+      'code' => int 7
+      'name' => string 'Debian' (length=6)
+      'version' => string '9.2' (length=3)
+  3 => 
+    array (size=3)
+      'code' => int 9
+      'name' => string 'Fedora' (length=6)
+      'version' => string '27' (length=2)
+  4 => 
+    array (size=3)
+      'code' => int 12
+      'name' => string 'Ubuntu' (length=6)
+      'version' => string '18.04 LTS' (length=9)
+  5 => 
+    array (size=3)
+      'code' => int 14
+      'name' => string 'Debian' (length=6)
+      'version' => string '10' (length=2)
+```
+
+---
+
+`serverPackages();`
+
+[Örnek Kullanım](https://github.com/unique1984/ilkbyte-php-api-connector/blob/master/Examples/serverPackages.php)
+
+Hesabınıza yeni sunucu eklemek istediğinizde sunucu kapasitelerini listeleyen method.
+
+```php
+/var/www/ilkbytephpapi/PhpApiConnector/example/serverPackages.php:21:
+array (size=4)
+  0 => 
+    array (size=4)
+      'code' => int 1
+      'features' => string '1 vCPU / 1 GB Memory / 16 GB SSD Disk / 1000 GB Bandwidth' (length=57)
+      'name' => string 'Başlangıç' (length=12)
+      'price' => string '$5/monthly' (length=10)
+  1 => 
+    array (size=4)
+      'code' => int 2
+      'features' => string '1 vCPU / 2 GB Memory / 32 GB SSD Disk / 2000 GB Bandwidth' (length=57)
+      'name' => string 'Ekonomik' (length=8)
+      'price' => string '$10/monthly' (length=11)
+  2 => 
+    array (size=4)
+      'code' => int 3
+      'features' => string '2 vCPU / 4 GB Memory / 64 GB SSD Disk / 3000 GB Bandwidth' (length=57)
+      'name' => string 'Avantaj' (length=7)
+      'price' => string '$20/monthly' (length=11)
+  3 => 
+    array (size=4)
+      'code' => int 4
+      'features' => string '4 vCPU / 8 GB Memory / 128 GB SSD Disk / 4000 GB Bandwidth' (length=58)
+      'name' => string 'Profesyonel' (length=11)
+      'price' => string '$40/monthly' (length=11)
+```
+
+---
+
+`createServer(...);` // **API Geliştiriliyor**
+
 ```php
     createServer(
           string $username,
@@ -195,11 +291,30 @@ array (size=6)
       );
 ```
 
-- serverStatus(string $serverName);
-- serverMonitor(string $serverName); // **API Geliştiriliyor**
+---
 
-- serverPowerJobs(string $serverName, string $job); // **API Geliştiriliyor** // [ start | shutdown | reboot | destroy ]
-- addRdns(...); // **API Geliştiriliyor**
+`serverStatus(string $serverName);`
+
+[Örnek Kullanım](https://github.com/unique1984/ilkbyte-php-api-connector/blob/master/Examples/serverStatus.php)
+
+Belirttiğiniz sunucunun temel durumunu döndüren method.
+
+```php
+// eklenecek...
+```
+
+---
+ 
+`serverMonitor(string $serverName);` // **API Geliştiriliyor**
+
+---
+
+`serverPowerJobs(string $serverName, string $job);` // **API Geliştiriliyor** // [ start | shutdown | reboot | destroy ]
+
+---
+
+`addRdns(...);` // **API Geliştiriliyor**
+
 ```php
 addRdns(
         string $serverName,
@@ -207,16 +322,46 @@ addRdns(
         string $rdns
     )
 ```
-- serverIpLogs(string $serverName); // **API Geliştiriliyor**
-- snapshotList(string $serverName); // **API Geliştiriliyor**
-- snapshotRevert(string $serverName, int $snapShotId); // **API Geliştiriliyor**
-- backupList(string $serverName); // **API Geliştiriliyor**
-- backupRevert(string $serverName, int $snapShotId); // **API Geliştiriliyor**
-- domainList(); // **API Geliştiriliyor**
-- domainPush(string $domain); // **API Geliştiriliyor**
-- domainAddDomain(string $domain, bool $pushIt); // **API Geliştiriliyor**
-- domainShowDomain(string $domain); // **API Geliştiriliyor**
-- domainAddRecord(...); // **API Geliştiriliyor**
+---
+
+`serverIpLogs(string $serverName);` // **API Geliştiriliyor**
+
+---
+
+`snapshotList(string $serverName);` // **API Geliştiriliyor**
+
+---
+
+`snapshotRevert(string $serverName, int $snapShotId);` // **API Geliştiriliyor**
+
+---
+
+`backupList(string $serverName);` // **API Geliştiriliyor**
+
+---
+
+`backupRevert(string $serverName, int $snapShotId);` // **API Geliştiriliyor**
+
+---
+
+`domainList();` // **API Geliştiriliyor**
+
+---
+
+`domainPush(string $domain);` // **API Geliştiriliyor**
+
+---
+
+`domainAddDomain(string $domain, bool $pushIt);` // **API Geliştiriliyor**
+
+---
+
+`domainShowDomain(string $domain);` // **API Geliştiriliyor**
+
+---
+
+`domainAddRecord(...);` // **API Geliştiriliyor**
+
 ```php
 domainAddRecord(
         string $domain,
@@ -227,7 +372,11 @@ domainAddRecord(
         bool $pushIt = false
     )
 ```
-- domainUpdateRecord(...); // **API Geliştiriliyor**
+
+---
+
+`domainUpdateRecord(...);` // **API Geliştiriliyor**
+
 ```php
 domainUpdateRecord(
         string $domain,
@@ -237,6 +386,17 @@ domainUpdateRecord(
         bool $pushIt = false
     )
 ```
-- domainDeleteDomain(string $domain); // **API Geliştiriliyor**
-- accountInfo(); // **API Geliştiriliyor**
-- accountPayment(); // **API Geliştiriliyor**
+
+---
+
+`domainDeleteDomain(string $domain);` // **API Geliştiriliyor**
+
+---
+
+`accountInfo();` // **API Geliştiriliyor**
+
+---
+
+`accountPayment();` // **API Geliştiriliyor**
+
+---

@@ -68,7 +68,7 @@ class Curl implements Version
         // REDIRECTS
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 
         // REQUEST HEADER
         curl_setopt($ch, CURLINFO_HEADER_OUT, true);
