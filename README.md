@@ -1,17 +1,25 @@
-**Bu ApiConnector Kimin için?**
+[**API sağlayıcı taraftan dikkat edilmesi gereken açıklama:**](#aciklama)
+
+> ***API geliştirilme aşamasında Pre-Alpha versiyonunda olup kesinlikle production ortamında kullanılmamalıdır.***
+
+API geliştirildikçe, bu repository de geliştirilmeye devam edilecektir, şimdilik sadece izleme methodları aktif olup diğer işlemler için fake url belirlenmiş durumdadır. ApiConnector içerisindeki URL_ yapısını [EndPointUrlList](https://github.com/unique1984/ilkbyte-php-api-connector/blob/master/Helper/EndPointUrlList.php) interface dosyasından inceleyebilirsiniz.
+
+--- 
+
+[**Bu ApiConnector Kimin için?**](#kimin_icin)
 
 * [ilkbyte](https://www.ilkbyte.com) müşteri hesabı bulunan ve sanal sunucuları için kendi otomasyonunu yazmak isteyen **geliştiriciler** için. 
 
 ---
 
-**Ne yapar? - Ne yapmaz?**
+[**Ne yapar? - Ne yapmaz?**](#neyapar_neyapmaz)
 
 * ilkbyte endpoint tarafına kendi [api dökümanlarında](https://github.com/ilkbyte/api.ilkbyte.com/wiki) belirtildiği şekilde istek yapar ve bool veya array türünde veri döndürür.
 * Dönen veriyi işlemek **geliştirici** arkadaşın işidir ve bu repository bunu dert **edinmemektedir**.
 
 ---
 
-**Temel Gereksinimler :**
+[**Temel Gereksinimler :**](#temel_gereksinimler)
 
 1. PHP [7.2|7.3] test edildi. ([7.4] test edilecek.)
 2. https://getcomposer.org/download/ adresinden işlemleri takip edin.
@@ -21,7 +29,7 @@
 
 ---
 
-**Kurulum & Kullanım :**
+[**Kurulum & Kullanım :**](#kurulum_kullanim)
 
 **composer**
 
@@ -55,7 +63,7 @@ include 'vendor/autoload.php'; // PSR-4 autoloader yükle.
 
 ---
 
-`checkApiAccess();`
+[`checkApiAccess();`](#checkApiAccess)
 
 Yalnızca api erişimini test eder.
 
@@ -71,7 +79,7 @@ array (size=4)
 
 ---
 
-`activeServers();`
+[`activeServers();`](#activeServers)
 
 [Örnek Kullanım](https://github.com/unique1984/ilkbyte-php-api-connector/blob/master/Examples/activeServers.php)
 Hesabınızda kayıtlı **aktif** sunucuların listesi `array` formatında döndürür.
@@ -94,7 +102,7 @@ array (size=1)
 
 ---
 
-`allServers();`
+[ ](#allServers) `allServers();`
 
 [Örnek Kullanım](https://github.com/unique1984/ilkbyte-php-api-connector/blob/master/Examples/allServers.php)
 
@@ -400,3 +408,6 @@ domainUpdateRecord(
 `accountPayment();` // **API Geliştiriliyor**
 
 ---
+
+Saygılarımla,
+Yasin KARABULAK
