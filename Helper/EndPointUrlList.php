@@ -14,7 +14,7 @@ interface EndPointUrlList
     const URL_SERVER_LIST = '/server/list';
     const URL_SERVER_LIST_ALL = '/server/list/all';
     const URL_SERVER_CREATE = '/server/create';
-//    const URL_SERVER_CREATE_CONFIG = '/server/create/config'; // Developing
+//    const URL_SERVER_CREATE_CONFIG = '/server/create/config';
     const URL_SERVER_CREATE_CONFIG = 'http://services/api'; // FAKE EndPoint Test Purposes
     /* %s -> server name */
     const URL_SERVER_STATUS = '/server/manage/%s/show';
@@ -36,8 +36,8 @@ interface EndPointUrlList
 //    const URL_DOMAIN_CREATE = '/domain/create';
     const URL_DOMAIN_CREATE = 'http://services/api'; // FAKE EndPoint Test Purposes
     const URL_DOMAIN_SHOW = '/domain/manage/%s/show';
-//    const URL_DOMAIN_ADD = '/domain/manage/%s/add';
-    const URL_DOMAIN_ADD = 'http://services/api/%s'; // FAKE EndPoint Test Purposes
+//    const URL_DOMAIN_ADD_RECORD = '/domain/manage/%s/add';
+    const URL_DOMAIN_ADD_RECORD = 'http://services/api/%s'; // FAKE EndPoint Test Purposes
 //    const URL_DOMAIN_UPDATE = '/domain/manage/%s/update';
     const URL_DOMAIN_UPDATE = 'http://services/api/%s'; // FAKE EndPoint Test Purposes
     const URL_DOMAIN_DELETE = '/domain/manage/%s/delete';

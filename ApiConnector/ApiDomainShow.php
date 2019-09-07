@@ -10,13 +10,12 @@ namespace PhpApiConnector\ApiConnector;
 
 use PhpApiConnector\Handler\Curl;
 
-final class ApiDomainAddRecord extends ApiConnector
+final class ApiDomainShow extends ApiConnector
 {
     public function __construct(string $domain, array $parameters = array(), $devMode = false)
     {
         $call = new Curl();
-//        $url = sprintf(self::URL_API . self::URL_DOMAIN_ADD, $domain);
-        $url = sprintf(self::URL_DOMAIN_ADD_RECORD, $domain);
+        $url = sprintf(self::URL_API . self::URL_DOMAIN_SHOW, $domain);
         $call->apiCall($url, $devMode, $parameters);
         $this->setLogs($call->apiCallLogs);
         $this->setResponse($call->responseBody);
