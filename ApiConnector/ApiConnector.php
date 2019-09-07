@@ -14,9 +14,8 @@ use PhpApiConnector\Helper\Version;
 
 class ApiConnector implements EndPointUrlList, Version, Errors
 {
-    // Curl->apiCall Logs [error, info, response_header]
-    public $devMode;
-    protected $logs;
+    protected $devMode;
+    protected $apiCallLogs;
     protected $sshKeys;
     protected $response;
     protected $responseStatus;
@@ -31,9 +30,8 @@ class ApiConnector implements EndPointUrlList, Version, Errors
         string $sshPublicKeys = null,
         bool $devMode = false
     ) {
+        $this->setDevMode($devMode);
         $this->setApiCredentials($apiKey, $apiSecret);
-//        $this->setDevMode($devMode);
-        $this->devMode = $devMode;
         $this->setSshKeys($sshPublicKeys);
     }
 
@@ -46,10 +44,22 @@ class ApiConnector implements EndPointUrlList, Version, Errors
         $this->apiCredentials = $apiCredentials;
     }
 
+    private function checkApiStatus($status, $error)
+    {
+        if (!$status) {
+            die(self::ERROR_API_DOWN);
+        }
+
+        if (!is_null($error)) {
+            die(self::ERROR_API_ERROR . $this->getResponseError());
+        }
+    }
+
     public function checkApiAccess()
     {
         $check = new ApiAccessCheck(
-            $this->getApiCredentials()
+            $this->getApiCredentials(),
+            $this->getDevMode()
         );
 
         $this(
@@ -58,17 +68,14 @@ class ApiConnector implements EndPointUrlList, Version, Errors
         );
 
         $parseResponse = new ParseResponse($check->getResponse());
+        $this->checkApiStatus(
+            $parseResponse->getResponseStatus(),
+            $parseResponse->getResponseError()
+        );
 
-        $apiAccessData = $parseResponse->getResponseData();
+        // $parseResponse->getResponseMessage();
 
-        $this->setApiAccess($apiAccessData['api_access']);
-        $this->setApiAccessErrors(null);
-        if (isset($apiAccessData['errors'])) {
-            $this->setApiAccessErrors($apiAccessData['errors']);
-        }
-        $this->setApiAccessPermission($apiAccessData['permission']);
-
-        return $this->getApiAccess();
+        return $parseResponse->getResponseData();
     }
 
     /**
@@ -82,9 +89,25 @@ class ApiConnector implements EndPointUrlList, Version, Errors
     /**
      * @return mixed
      */
+    public function getDevMode()
+    {
+        return $this->devMode;
+    }
+
+    /**
+     * @param mixed $devMode
+     */
+    public function setDevMode($devMode): void
+    {
+        $this->devMode = $devMode;
+    }
+
+    /**
+     * @return mixed
+     */
     protected function getLogs()
     {
-        return $this->logs;
+        return $this->apiCallLogs;
     }
 
     /**
@@ -96,21 +119,35 @@ class ApiConnector implements EndPointUrlList, Version, Errors
     }
 
     /**
-     * @return array
+     * @return mixed
      */
-    public function getSshKeys(): array
+    public function getResponseStatus()
     {
-        return $this->sshKeys;
+        return $this->responseStatus;
     }
 
     /**
-     * @param mixed $sshKeys
+     * @return mixed
      */
-    public function setSshKeys($sshKeys): void
+    public function getResponseError()
     {
-        $this->sshKeys = array(
-            'sshkey' => $sshKeys
-        );
+        return $this->responseError;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResponseData()
+    {
+        return $this->responseData;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResponseMessage()
+    {
+        return $this->responseMessage;
     }
 
     /**
@@ -119,10 +156,28 @@ class ApiConnector implements EndPointUrlList, Version, Errors
      */
     public function __invoke($logs, $response)
     {
-        if ($this->getDevMode() && !is_null($logs) || !is_null($response)) {
+        if ($this->getDevMode() && (!is_null($logs) || !is_null($response))) {
             print_r($logs);
             print_r($response);
         }
+    }
+
+    /**
+     * @return array
+     */
+    protected function getSshKeys(): array
+    {
+        return $this->sshKeys;
+    }
+
+    /**
+     * @param mixed $sshKeys
+     */
+    protected function setSshKeys($sshKeys): void
+    {
+        $this->sshKeys = array(
+            'sshkey' => $sshKeys
+        );
     }
 
 }

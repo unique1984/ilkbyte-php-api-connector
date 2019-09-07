@@ -12,5 +12,5 @@ interface Errors
 {
     const ERROR_API_DOWN = 'API Down!';
     const ERROR_API_KEY_WRONG = 'Api key or secret is wrong!';
-
+    const ERROR_API_ERROR = 'Api Error: ';
 }

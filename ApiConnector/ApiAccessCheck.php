@@ -12,18 +12,11 @@ use PhpApiConnector\Handler\Curl;
 
 final class ApiAccessCheck extends ApiConnector
 {
-    public function __construct(array $parameters = array())
+    public function __construct(array $parameters = array(), $devMode = false)
     {
-//        var_dump($this->getDevMode());
-        var_dump($this->devMode);
-        var_dump(self::URL_API);
-        print_r($parameters);
-
-        die;
-
         $call = new Curl();
         $call->apiCall(self::URL_API, $devMode, $parameters);
-        $this->setLogs($call->logs);
+        $this->setLogs($call->apiCallLogs);
         $this->setResponse($call->responseBody);
     }
 
@@ -32,7 +25,7 @@ final class ApiAccessCheck extends ApiConnector
      */
     private function setLogs($logs): void
     {
-        $this->logs = $logs;
+        $this->apiCallLogs = $logs;
     }
 
     /**

@@ -12,7 +12,7 @@ use PhpApiConnector\Helper\Version;
 
 class Curl implements Version
 {
-    public $logs = array();
+    public $apiCallLogs = array();
     public $responseBody = array();
 
     public function apiCall(
@@ -33,10 +33,10 @@ class Curl implements Version
 
         // HEADERS INIT
         $headers = array(
-            //~ "Content-Type: text/plain; charset=windows-1254",
-            //~ "Content-Type: text/html; charset=ISO-8859-9",
-//            "Content-Type: text/html; charset=UTF-8",
-//            "Content-Type: multipart/form-data", // image post
+            //  "Content-Type: text/plain; charset=windows-1254",
+            //  "Content-Type: text/html; charset=ISO-8859-9",
+            //  "Content-Type: text/html; charset=UTF-8",
+            //  "Content-Type: multipart/form-data", // image post
             "Content-Type: application/x-www-form-urlencoded" // form post
         );
 
@@ -79,12 +79,12 @@ class Curl implements Version
         $returnData = curl_exec($ch);
 
         // GET ERRORS
-        $this->logs['error'] = curl_error($ch);
-        $this->logs['info'] = curl_getinfo($ch);
+        $this->apiCallLogs['error'] = curl_error($ch);
+        $this->apiCallLogs['info'] = curl_getinfo($ch);
 
         // GET RESPONSE HEADER
         $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-        $this->logs['response_header'] = substr($returnData, 0, $header_size);
+        $this->apiCallLogs['response_header'] = substr($returnData, 0, $header_size);
 
         // GET RESPONSE BODY
         $body = substr($returnData, $header_size);
