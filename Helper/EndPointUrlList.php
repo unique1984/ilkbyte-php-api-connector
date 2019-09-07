@@ -37,7 +37,8 @@ interface EndPointUrlList
     const URL_DOMAIN_SHOW = '/domain/manage/%s/show';
 //    const URL_DOMAIN_ADD = '/domain/manage/%s/add';
     const URL_DOMAIN_ADD = 'http://services/api/%s'; // FAKE EndPoint Test Purposes
-    const URL_DOMAIN_UPDATE = '/domain/manage/%s/update';
+//    const URL_DOMAIN_UPDATE = '/domain/manage/%s/update';
+    const URL_DOMAIN_UPDATE = 'http://services/api/%s'; // FAKE EndPoint Test Purposes
     const URL_DOMAIN_DELETE = '/domain/manage/%s/delete';
     const URL_ACCOUNT = '/account';
 //    const URL_ACCOUNT_PAYMENT = '/account/payment';    // Developing
