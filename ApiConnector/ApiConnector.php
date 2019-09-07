@@ -680,6 +680,41 @@ class ApiConnector implements EndPointUrlList, StaticValues, Version, Errors
         return $parseResponse->getResponseData();
     }
 
+    public function domainAddDomain(string $domain, bool $pushIt)
+    {
+        $parameters = array_merge(
+            $this->getApiCredentials(),
+            [
+                'domain' => $domain
+            ]
+        );
+
+        $add = new ApiDomainAddDomain(
+            $parameters,
+            $this->getDevMode()
+        );
+
+        $this(
+            $add->getLogs(),
+            $add->getResponse()
+        );
+
+        if ($pushIt) {
+            $this->domainPush($domain);
+        }
+
+        die("Gerisi Api faaliyete geçince...");
+        $parseResponse = new ParseResponse($add->getResponse());
+        $this->checkApiStatus(
+            $parseResponse->getResponseStatus(),
+            $parseResponse->getResponseError()
+        );
+
+        // $parseResponse->getResponseMessage();
+
+        return $parseResponse->getResponseData();
+    }
+
     public function domainAddRecord(
         string $domain,
         string $recordName,
