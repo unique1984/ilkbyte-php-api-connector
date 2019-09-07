@@ -187,7 +187,12 @@ class ApiConnector implements EndPointUrlList, StaticValues, Version, Errors
 
         // $parseResponse->getResponseMessage();
 
-        return $parseResponse->getResponseData();
+        $response = $parseResponse->getResponseData();
+
+        $pagination = $response['pagination'];
+        $server_list = $response['server_list'];
+
+        return $server_list;
     }
 
     public function activeServers()
@@ -210,7 +215,12 @@ class ApiConnector implements EndPointUrlList, StaticValues, Version, Errors
 
         // $parseResponse->getResponseMessage();
 
-        return $parseResponse->getResponseData();
+        $response = $parseResponse->getResponseData();
+
+        $pagination = $response['pagination'];
+        $server_list = $response['server_list'];
+
+        return $server_list;
     }
 
     public function snapshotList(string $serverName)

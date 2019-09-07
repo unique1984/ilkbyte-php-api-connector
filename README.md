@@ -1,6 +1,6 @@
 `git clone https://github.com/unique1984/ilkbyte-php-api-connector.git`
 
-Clon işleminden sonra native php için;
+Clon işleminden sonra **native php** için;
 
 Composer `vendor/autoload` dosyası oluşturmak için, composer.json dosyasının olduğu dizinde: 
 ```
@@ -8,7 +8,7 @@ composer dump-autoload -o
 ```
 komutunun verilmesi yeterli.
 
-_inc.php içeriği
+`Examples/_inc.php` dosyasının içeriği.
 ```php
 <?php
 ...
