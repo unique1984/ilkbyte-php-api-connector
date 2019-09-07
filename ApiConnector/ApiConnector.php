@@ -142,9 +142,9 @@ class ApiConnector implements EndPointUrlList, Version, Errors
         return $this->responseData;
     }
 
-    public function activeServers()
+    public function canceledServers()
     {
-        $check = new ApiActiveServerList(
+        $check = new ApiAccessCheck(
             $this->getApiCredentials(),
             $this->getDevMode()
         );
@@ -154,15 +154,16 @@ class ApiConnector implements EndPointUrlList, Version, Errors
             $check->getResponse()
         );
 
-        $parseResponse = new ParseResponse($check->getResponse());
-        $this->checkApiStatus(
-            $parseResponse->getResponseStatus(),
-            $parseResponse->getResponseError()
-        );
+        $allServers = $this->allServers();
 
-        // $parseResponse->getResponseMessage();
+        $canceledServers = array();
+        foreach ($allServers as $item => $servers) {
+            if (!preg_match('/\w+REMOVE\d{1,}/', $servers['name']) && $servers['service'] == 'cancel') {
+                $canceledServers[] = $allServers[$item];
+            }
+        }
 
-        return $parseResponse->getResponseData();
+        return $canceledServers;
     }
 
     public function allServers()
@@ -186,6 +187,53 @@ class ApiConnector implements EndPointUrlList, Version, Errors
         // $parseResponse->getResponseMessage();
 
         return $parseResponse->getResponseData();
+    }
+
+    public function activeServers()
+    {
+        $check = new ApiActiveServerList(
+            $this->getApiCredentials(),
+            $this->getDevMode()
+        );
+
+        $this(
+            $check->getLogs(),
+            $check->getResponse()
+        );
+
+        $parseResponse = new ParseResponse($check->getResponse());
+        $this->checkApiStatus(
+            $parseResponse->getResponseStatus(),
+            $parseResponse->getResponseError()
+        );
+
+        // $parseResponse->getResponseMessage();
+
+        return $parseResponse->getResponseData();
+    }
+
+    public function deletedServers()
+    {
+        $check = new ApiAccessCheck(
+            $this->getApiCredentials(),
+            $this->getDevMode()
+        );
+
+        $this(
+            $check->getLogs(),
+            $check->getResponse()
+        );
+
+        $allServers = $this->allServers();
+
+        $deleted = array();
+        foreach ($allServers as $item => $servers) {
+            if (preg_match('/\w+REMOVE\d{1,}/', $servers['name']) && $servers['service'] == 'cancel') {
+                $deleted[] = $allServers[$item];
+            }
+        }
+
+        return $deleted;
     }
 
     public function serverReadyApplications()
@@ -237,6 +285,30 @@ class ApiConnector implements EndPointUrlList, Version, Errors
     }
 
     public function serverPackages()
+    {
+        $check = new ApiServerOperatingSystems(
+            $this->getApiCredentials(),
+            $this->getDevMode()
+        );
+
+        $this(
+            $check->getLogs(),
+            $check->getResponse()
+        );
+
+        $parseResponse = new ParseResponse($check->getResponse());
+        $this->checkApiStatus(
+            $parseResponse->getResponseStatus(),
+            $parseResponse->getResponseError()
+        );
+
+        // $parseResponse->getResponseMessage();
+
+        $data = $parseResponse->getResponseData();
+        return $data['package'];
+    }
+
+    public function serverCreate()
     {
         $check = new ApiServerOperatingSystems(
             $this->getApiCredentials(),
