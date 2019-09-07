@@ -74,8 +74,7 @@ array (size=4)
 `activeServers();`
 
 [Örnek Kullanım](https://github.com/unique1984/ilkbyte-php-api-connector/blob/master/Examples/activeServers.php)
-Hesabınızda kayıtlı aktif sunucuların listesi `array` formunda döner.
-
+Hesabınızda kayıtlı **aktif** sunucuların listesi `array` formatında döndürür.
 
 ```php
 /var/www/ilkbytephpapi/PhpApiConnector/example/activeServers.php:21:
@@ -93,9 +92,93 @@ array (size=1)
       'status' => string 'nil' (length=3)
 ```
 
-- allServers();
-- deletedServers();
-- canceledServers();
+---
+
+`allServers();`
+
+[Örnek Kullanım](https://github.com/unique1984/ilkbyte-php-api-connector/blob/master/Examples/allServers.php)
+
+Hesabınızda kayıtlı bütün sunucularınızı `array` formatında döndürür.
+
+```php
+/var/www/ilkbytephpapi/PhpApiConnector/example/allServers.php:21:
+array (size=6)
+  0 => 
+    array (size=9)
+      'bandwidth_limit' => int 1073741824000
+      'bandwidth_usage' => int 526470076
+      'created_time' => string '07.09.2019 04:37:16' (length=19)
+      'ipv4' => string 'x.x.x.x' (length=13)
+      'ipv6' => string 'xxxx:xxxx:x:xx::xx:x' (length=20)
+      'name' => string 'ysntest' (length=7)
+      'osapp' => string 'Debian 10 / OpenSSH' (length=19)
+      'service' => string 'active' (length=6)
+      'status' => string 'nil' (length=3)
+  1 => 
+    array (size=9)
+      'bandwidth_limit' => int 1073741824000
+      'bandwidth_usage' => int 221173936
+      'deleted_time' => string '06.09.2019 16:00:00' (length=19)
+      'ipv4' => string 'x.x.x.x' (length=13)
+      'ipv6' => string 'xxxx:xxxx:x:xx::xx:x' (length=20)
+      'name' => string 'deb9_REMOVE1778' (length=15)
+      'osapp' => string 'Debian 9.2 / OpenSSH' (length=20)
+      'service' => string 'cancel' (length=6)
+      'status' => string 'nil' (length=3)
+  2 => 
+    array (size=9)
+      'bandwidth_limit' => int 1073741824000
+      'bandwidth_usage' => int 0
+      'deleted_time' => string '06.09.2019 02:46:47' (length=19)
+      'ipv4' => string 'x.x.x.x' (length=13)
+      'ipv6' => string 'xxxx:xxxx:x:xx::xx:x' (length=20)
+      'name' => string 'uxnnxu' (length=6)
+      'osapp' => string 'Debian 10 / OpenSSH' (length=19)
+      'service' => string 'cancel' (length=6)
+      'status' => string 'nil' (length=3)
+  3 => 
+    array (size=9)
+      'bandwidth_limit' => int 1073741824000
+      'bandwidth_usage' => int 0
+      'deleted_time' => string '06.09.2019 02:15:14' (length=19)
+      'ipv4' => string 'x.x.x.x' (length=13)
+      'ipv6' => string 'xxxx:xxxx:x:xx::xx:x' (length=20)
+      'name' => string 'ysn' (length=3)
+      'osapp' => string 'Debian 10 / OpenSSH' (length=19)
+      'service' => string 'cancel' (length=6)
+      'status' => string 'nil' (length=3)
+  4 => 
+    array (size=9)
+      'bandwidth_limit' => int 1073741824000
+      'bandwidth_usage' => int 40255155
+      'deleted_time' => string '06.09.2019 02:10:08' (length=19)
+      'ipv4' => string 'x.x.x.x' (length=13)
+      'ipv6' => string 'xxxx:xxxx:x:xx::xx:x' (length=20)
+      'name' => string 'ysn_REMOVE1774' (length=14)
+      'osapp' => string 'Debian 10 / OpenSSH' (length=19)
+      'service' => string 'cancel' (length=6)
+      'status' => string 'nil' (length=3)
+  5 => 
+    array (size=9)
+      'bandwidth_limit' => int 1073741824000
+      'bandwidth_usage' => int 207281116
+      'deleted_time' => string '04.09.2019 20:10:29' (length=19)
+      'ipv4' => string 'x.x.x.x' (length=14)
+      'ipv6' => string 'xxxx:xxxx:x:xx::xx:x' (length=20)
+      'name' => string 'uxn_REMOVE1769' (length=14)
+      'osapp' => string 'Debian 10 / OpenSSH' (length=19)
+      'service' => string 'cancel' (length=6)
+      'status' => string 'nil' (length=3)
+```
+
+**silinmiş** ve **iptal** durumundaki sunucular için, kolaylık sağlaması adına ayrıca iki adet method oluşturulmuştur. 
+
+`deletedServers();` Silinmiş sunucular.
+
+`canceledServers();` İptal edilmiş sunucular.
+
+---
+
 - serverReadyApplications();
 - serverOperatingSystems();
 - serverPackages();
