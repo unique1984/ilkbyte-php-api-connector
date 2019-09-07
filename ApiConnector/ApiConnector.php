@@ -286,12 +286,29 @@ class ApiConnector implements EndPointUrlList, Version, Errors
         return $parseResponse->getResponseData();
     }
 
+    /**
+     * @return array
+     */
+    protected function getSshKeys(): array
+    {
+        return $this->sshKeys;
+    }
+
+    /**
+     * @param mixed $sshKeys
+     */
+    protected function setSshKeys($sshKeys): void
+    {
+        $this->sshKeys = array(
+            'sshkey' => $sshKeys
+        );
+    }
+
     public function addRdns(
         string $serverName,
         string $ip,
         string $rdns
-    )
-    {
+    ) {
         $parameters = [
             'ip' => $ip,
             'rdns' => $rdns
@@ -325,26 +342,7 @@ class ApiConnector implements EndPointUrlList, Version, Errors
         return $parseResponse->getResponseData();
     }
 
-
-    /**
-     * @return array
-     */
-    protected function getSshKeys(): array
-    {
-        return $this->sshKeys;
-    }
-
-    /**
-     * @param mixed $sshKeys
-     */
-    protected function setSshKeys($sshKeys): void
-    {
-        $this->sshKeys = array(
-            'sshkey' => $sshKeys
-        );
-    }
-
-    public function serverStatus($serverName)
+    public function serverStatus(string $serverName)
     {
         $check = new ApiServerStatus(
             $serverName,
@@ -368,7 +366,31 @@ class ApiConnector implements EndPointUrlList, Version, Errors
         return $parseResponse->getResponseData();
     }
 
-    public function serverMonitor($serverName)
+    public function serverIpLogs(string $serverName)
+    {
+        $logs = new ApiServerIpLogs(
+            $serverName,
+            $this->getApiCredentials(),
+            $this->getDevMode()
+        );
+
+        $this(
+            $logs->getLogs(),
+            $logs->getResponse()
+        );
+
+        $parseResponse = new ParseResponse($logs->getResponse());
+        $this->checkApiStatus(
+            $parseResponse->getResponseStatus(),
+            $parseResponse->getResponseError()
+        );
+
+        // $parseResponse->getResponseMessage();
+
+        return $parseResponse->getResponseData();
+    }
+
+    public function serverMonitor(string $serverName)
     {
         $check = new ApiServerStatus(
             $serverName,
@@ -470,30 +492,6 @@ class ApiConnector implements EndPointUrlList, Version, Errors
     }
 
     public function serverPackages()
-    {
-        $check = new ApiServerOperatingSystems(
-            $this->getApiCredentials(),
-            $this->getDevMode()
-        );
-
-        $this(
-            $check->getLogs(),
-            $check->getResponse()
-        );
-
-        $parseResponse = new ParseResponse($check->getResponse());
-        $this->checkApiStatus(
-            $parseResponse->getResponseStatus(),
-            $parseResponse->getResponseError()
-        );
-
-        // $parseResponse->getResponseMessage();
-
-        $data = $parseResponse->getResponseData();
-        return $data['package'];
-    }
-
-    public function serverCreate()
     {
         $check = new ApiServerOperatingSystems(
             $this->getApiCredentials(),
