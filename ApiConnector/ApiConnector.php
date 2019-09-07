@@ -655,31 +655,6 @@ class ApiConnector implements EndPointUrlList, StaticValues, Version, Errors
         return $parseResponse->getResponseData();
     }
 
-    public function domainPush(string $domain)
-    {
-        $push = new ApiDomainPush(
-            $domain,
-            $this->getApiCredentials(),
-            $this->getDevMode()
-        );
-
-        $this(
-            $push->getLogs(),
-            $push->getResponse()
-        );
-
-        die("Gerisi Api faaliyete geçince...");
-        $parseResponse = new ParseResponse($push->getResponse());
-        $this->checkApiStatus(
-            $parseResponse->getResponseStatus(),
-            $parseResponse->getResponseError()
-        );
-
-        // $parseResponse->getResponseMessage();
-
-        return $parseResponse->getResponseData();
-    }
-
     public function domainAddDomain(string $domain, bool $pushIt)
     {
         $parameters = array_merge(
@@ -705,6 +680,31 @@ class ApiConnector implements EndPointUrlList, StaticValues, Version, Errors
 
         die("Gerisi Api faaliyete geçince...");
         $parseResponse = new ParseResponse($add->getResponse());
+        $this->checkApiStatus(
+            $parseResponse->getResponseStatus(),
+            $parseResponse->getResponseError()
+        );
+
+        // $parseResponse->getResponseMessage();
+
+        return $parseResponse->getResponseData();
+    }
+
+    public function domainPush(string $domain)
+    {
+        $push = new ApiDomainPush(
+            $domain,
+            $this->getApiCredentials(),
+            $this->getDevMode()
+        );
+
+        $this(
+            $push->getLogs(),
+            $push->getResponse()
+        );
+
+        die("Gerisi Api faaliyete geçince...");
+        $parseResponse = new ParseResponse($push->getResponse());
         $this->checkApiStatus(
             $parseResponse->getResponseStatus(),
             $parseResponse->getResponseError()
@@ -771,8 +771,7 @@ class ApiConnector implements EndPointUrlList, StaticValues, Version, Errors
         string $recordContent,
         int $recordPriority,
         bool $pushIt = false
-    )
-    {
+    ) {
         $recordType = strtoupper($recordType);
         if (!in_array($recordType, self::VALUE_DNS_RECORD_TYPES)) {
             die(self::ERROR_DNS_RECORD_TYPE_WRONG);
@@ -821,8 +820,7 @@ class ApiConnector implements EndPointUrlList, StaticValues, Version, Errors
         string $recordContent,
         int $recordPriority,
         bool $pushIt = false
-    )
-    {
+    ) {
         $parameters = array_merge(
             $this->getApiCredentials(),
             [
