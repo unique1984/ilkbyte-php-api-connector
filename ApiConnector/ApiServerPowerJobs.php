@@ -14,9 +14,8 @@ final class ApiServerPowerJobs extends ApiConnector
 {
     public function __construct(string $serverName, array $parameters = array(), $devMode = false)
     {
-        $url = sprintf(self::URL_POWER, $serverName);
+        $url = sprintf(self::URL_API . self::URL_POWER, $serverName);
         $call = new Curl();
-        $url = self::URL_API . $url;
         $call->apiCall($url, $devMode, $parameters);
         $this->setLogs($call->apiCallLogs);
         $this->setResponse($call->responseBody);

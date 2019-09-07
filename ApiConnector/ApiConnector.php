@@ -519,7 +519,7 @@ class ApiConnector implements EndPointUrlList, StaticValues, Version, Errors
 
     public function serverMonitor(string $serverName)
     {
-        $check = new ApiServerStatus(
+        $check = new ApiServerMonitor(
             $serverName,
             $this->getApiCredentials(),
             $this->getDevMode()
