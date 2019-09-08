@@ -308,7 +308,14 @@ array (size=4)
 Belirttiğiniz sunucunun temel durumunu döndüren method.
 
 ```php
-// eklenecek...
+/var/www/ilkbytephpapi/PhpApiConnector/example/serverStatus.php:21:
+array (size=6)
+  'service' => string 'Active' (length=6)
+  'status' => string 'Unknow' (length=6)
+  'ipv4' => string 'x.x.x.x' (length=13)
+  'ipv6' => string 'xxxx:xxxx:x:xx::xx:x' (length=20)
+  'bandwidth_limit' => int 1073741824000
+  'bandwidth_usage' => int 573950896
 ```
 
 ---
