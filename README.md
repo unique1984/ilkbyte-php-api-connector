@@ -21,7 +21,7 @@ API geliştirildikçe, bu repository de geliştirilmeye devam edilecektir, şimd
 
 **Temel Gereksinimler :**
 
-1. PHP [7.2|7.3] test edildi. ([7.4] test edilecek.)
+1. PHP 7.2 ve üstü [7.2|7.3|7.4] test edildi.
 2. https://getcomposer.org/download/ adresinden işlemleri takip edin.
 3. git
 4. [ilkbyte](https://www.ilkbyte.com) müşteri hesabı (api bilgilerinin elde edileceği yer.)
