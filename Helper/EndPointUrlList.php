@@ -6,7 +6,7 @@
  * http://ozgurlisanslar.org.tr/mit/
  */
 
-namespace PhpApiConnector\ApiConnector;
+namespace PhpApiConnector\Helper;
 
 interface EndPointUrlList
 {

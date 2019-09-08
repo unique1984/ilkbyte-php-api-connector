@@ -6,7 +6,7 @@
  * http://ozgurlisanslar.org.tr/mit/
  */
 
-namespace PhpApiConnector\Handler;
+namespace PhpApiConnector\Helper;
 
 use PhpApiConnector\ApiConnector\ApiConnector;
 
