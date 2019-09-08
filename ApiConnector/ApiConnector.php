@@ -8,7 +8,8 @@
 
 namespace PhpApiConnector\ApiConnector;
 
-use PhpApiConnector\Handler\ParseResponse;
+use PhpApiConnector\Helper\ParseResponse;
+use PhpApiConnector\Helper\EndPointUrlList;
 use PhpApiConnector\Helper\StaticValues;
 use PhpApiConnector\Helper\Version;
 use PhpApiConnector\Helper\Errors;
