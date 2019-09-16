@@ -1,4 +1,4 @@
-**API sağlayıcı taraftan dikkat edilmesi gereken açıklama:**
+#### API sağlayıcı taraftan dikkat edilmesi gereken açıklama:
 
 > ***API geliştirilme aşamasında Pre-Alpha versiyonunda olup kesinlikle production ortamında kullanılmamalıdır.***
 
@@ -6,20 +6,20 @@ API geliştirildikçe, bu repository de geliştirilmeye devam edilecektir, şimd
 
 --- 
 
-**Bu ApiConnector Kimin için?**
+#### Bu ApiConnector Kimin için?
 
 * [ilkbyte](https://www.ilkbyte.com/ref/0oud0nse) müşteri hesabı bulunan ve sanal sunucuları için kendi otomasyonunu yazmak isteyen **geliştiriciler** için. 
 
 ---
 
-**Ne yapar? - Ne yapmaz?**
+#### Ne yapar? - Ne yapmaz?
 
 * ilkbyte endpoint tarafına kendi [api dökümanlarında](https://github.com/ilkbyte/api.ilkbyte.com/wiki) belirtildiği şekilde istek yapar ve bool veya array türünde veri döndürür.
 * Dönen veriyi işlemek **geliştirici** arkadaşın işidir ve bu repository bunu dert **edinmemektedir**.
 
 ---
 
-**Temel Gereksinimler :**
+#### Temel Gereksinimler :
 
 1. PHP 7.2 ve üstü [7.2|7.3|7.4] test edildi.
 2. https://getcomposer.org/download/ adresinden işlemleri takip edin.
@@ -29,7 +29,7 @@ API geliştirildikçe, bu repository de geliştirilmeye devam edilecektir, şimd
 
 ---
 
-**Kurulum & Kullanım :**
+#### Kurulum & Kullanım :
 
 **composer**
 
@@ -59,11 +59,11 @@ include 'vendor/autoload.php'; // PSR-4 autoloader yükle.
 *Kodlama PSR-2 Standardında yapılmıştır.*
 
 
-**ApiConnector Class içerisinde kullanılabilecek methodlar:**
+#### ApiConnector Class içerisinde kullanılabilecek methodlar:
 
 ---
 
-`checkApiAccess();`
+#### `checkApiAccess();`
 
 Yalnızca api erişimini test eder.
 
@@ -79,7 +79,7 @@ array (size=4)
 
 ---
 
-`activeServers();`
+#### `activeServers();`
 
 [Örnek Kullanım](https://github.com/unique1984/ilkbyte-php-api-connector/blob/master/Examples/activeServers.php)
 Hesabınızda kayıtlı **aktif** sunucuların listesi `array` formatında döndürür.
@@ -102,7 +102,7 @@ array (size=1)
 
 ---
 
-`allServers();`
+#### `allServers();`
 
 [Örnek Kullanım](https://github.com/unique1984/ilkbyte-php-api-connector/blob/master/Examples/allServers.php)
 
