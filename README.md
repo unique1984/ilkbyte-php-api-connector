@@ -181,13 +181,13 @@ array (size=6)
 
 **silinmiş** ve **iptal** durumundaki sunucular için, kolaylık sağlaması adına ayrıca iki adet method oluşturulmuştur. 
 
-`deletedServers();` Silinmiş sunucular. [Örnek Kullanım](https://github.com/unique1984/ilkbyte-php-api-connector/blob/master/Examples/deletedServers.php)
+#### `deletedServers();` Silinmiş sunucular. [Örnek Kullanım](https://github.com/unique1984/ilkbyte-php-api-connector/blob/master/Examples/deletedServers.php)
 
-`canceledServers();` İptal edilmiş sunucular. [Örnek Kullanım](https://github.com/unique1984/ilkbyte-php-api-connector/blob/master/Examples/canceledServers.php)
+#### `canceledServers();` İptal edilmiş sunucular. [Örnek Kullanım](https://github.com/unique1984/ilkbyte-php-api-connector/blob/master/Examples/canceledServers.php)
 
 ---
 
-`serverReadyApplications();`
+#### `serverReadyApplications();`
 
 [Örnek Kullanım](https://github.com/unique1984/ilkbyte-php-api-connector/blob/master/Examples/serverReadyApplications.php)
 
@@ -205,7 +205,7 @@ array (size=1)
 
 ---
 
-`serverOperatingSystems();`
+#### `serverOperatingSystems();`
 
 [Örnek Kullanım](https://github.com/unique1984/ilkbyte-php-api-connector/blob/master/Examples/serverOperatingSystems.php)
 
@@ -248,7 +248,7 @@ array (size=6)
 
 ---
 
-`serverPackages();`
+#### `serverPackages();`
 
 [Örnek Kullanım](https://github.com/unique1984/ilkbyte-php-api-connector/blob/master/Examples/serverPackages.php)
 
@@ -285,7 +285,7 @@ array (size=4)
 
 ---
 
-`createServer(...);` // **API Geliştiriliyor**
+#### `createServer(...);` // **API Geliştiriliyor**
 
 ```php
     createServer(
@@ -301,7 +301,7 @@ array (size=4)
 
 ---
 
-`serverStatus(string $serverName);`
+#### `serverStatus(string $serverName);`
 
 [Örnek Kullanım](https://github.com/unique1984/ilkbyte-php-api-connector/blob/master/Examples/serverStatus.php)
 
@@ -320,15 +320,15 @@ array (size=6)
 
 ---
  
-`serverMonitor(string $serverName);` // **API Geliştiriliyor**
+#### `serverMonitor(string $serverName);` // **API Geliştiriliyor**
 
 ---
 
-`serverPowerJobs(string $serverName, string $job);` // **API Geliştiriliyor** // [ start | shutdown | reboot | destroy ]
+#### `serverPowerJobs(string $serverName, string $job);` // **API Geliştiriliyor** // [ start | shutdown | reboot | destroy ]
 
 ---
 
-`addRdns(...);` // **API Geliştiriliyor**
+#### `addRdns(...);` // **API Geliştiriliyor**
 
 ```php
 addRdns(
@@ -339,43 +339,43 @@ addRdns(
 ```
 ---
 
-`serverIpLogs(string $serverName);` // **API Geliştiriliyor**
+#### `serverIpLogs(string $serverName);` // **API Geliştiriliyor**
 
 ---
 
-`snapshotList(string $serverName);` // **API Geliştiriliyor**
+#### `snapshotList(string $serverName);` // **API Geliştiriliyor**
 
 ---
 
-`snapshotRevert(string $serverName, int $snapShotId);` // **API Geliştiriliyor**
+#### `snapshotRevert(string $serverName, int $snapShotId);` // **API Geliştiriliyor**
 
 ---
 
-`backupList(string $serverName);` // **API Geliştiriliyor**
+#### `backupList(string $serverName);` // **API Geliştiriliyor**
 
 ---
 
-`backupRevert(string $serverName, int $snapShotId);` // **API Geliştiriliyor**
+#### `backupRevert(string $serverName, int $snapShotId);` // **API Geliştiriliyor**
 
 ---
 
-`domainList();` // **API Geliştiriliyor**
+#### `domainList();` // **API Geliştiriliyor**
 
 ---
 
-`domainPush(string $domain);` // **API Geliştiriliyor**
+#### `domainPush(string $domain);` // **API Geliştiriliyor**
 
 ---
 
-`domainAddDomain(string $domain, bool $pushIt);` // **API Geliştiriliyor**
+#### `domainAddDomain(string $domain, bool $pushIt);` // **API Geliştiriliyor**
 
 ---
 
-`domainShowDomain(string $domain);` // **API Geliştiriliyor**
+#### `domainShowDomain(string $domain);` // **API Geliştiriliyor**
 
 ---
 
-`domainAddRecord(...);` // **API Geliştiriliyor**
+#### `domainAddRecord(...);` // **API Geliştiriliyor**
 
 ```php
 domainAddRecord(
@@ -390,7 +390,7 @@ domainAddRecord(
 
 ---
 
-`domainUpdateRecord(...);` // **API Geliştiriliyor**
+#### `domainUpdateRecord(...);` // **API Geliştiriliyor**
 
 ```php
 domainUpdateRecord(
@@ -404,15 +404,15 @@ domainUpdateRecord(
 
 ---
 
-`domainDeleteDomain(string $domain);` // **API Geliştiriliyor**
+#### `domainDeleteDomain(string $domain);` // **API Geliştiriliyor**
 
 ---
 
-`accountInfo();` // **API Geliştiriliyor**
+#### `accountInfo();` // **API Geliştiriliyor**
 
 ---
 
-`accountPayment();` // **API Geliştiriliyor**
+#### `accountPayment();` // **API Geliştiriliyor**
 
 ---
 
