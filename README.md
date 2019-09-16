@@ -8,7 +8,7 @@ API geliştirildikçe, bu repository de geliştirilmeye devam edilecektir, şimd
 
 **Bu ApiConnector Kimin için?**
 
-* [ilkbyte](https://www.ilkbyte.com) müşteri hesabı bulunan ve sanal sunucuları için kendi otomasyonunu yazmak isteyen **geliştiriciler** için. 
+* [ilkbyte](https://www.ilkbyte.com/ref/0oud0nse) müşteri hesabı bulunan ve sanal sunucuları için kendi otomasyonunu yazmak isteyen **geliştiriciler** için. 
 
 ---
 
@@ -24,7 +24,7 @@ API geliştirildikçe, bu repository de geliştirilmeye devam edilecektir, şimd
 1. PHP 7.2 ve üstü [7.2|7.3|7.4] test edildi.
 2. https://getcomposer.org/download/ adresinden işlemleri takip edin.
 3. git
-4. [ilkbyte](https://www.ilkbyte.com) müşteri hesabı (api bilgilerinin elde edileceği yer.)
+4. [ilkbyte](https://www.ilkbyte.com/ref/0oud0nse) müşteri hesabı (api bilgilerinin elde edileceği yer.)
 5. Çalışır durumda ve internet bağlantısı olan bir bilgisayar.
 
 ---
